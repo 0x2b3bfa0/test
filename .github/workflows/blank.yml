@@ -7,3 +7,4 @@ jobs:
 
     steps:
       - uses: iterative/setup-dvc@v1
+      - run: dvc doctor
