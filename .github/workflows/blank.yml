@@ -6,5 +6,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: iterative/setup-dvc@v1
-      - run: dvc doctor
+      - uses: mxschmitt/action-tmate@v3
