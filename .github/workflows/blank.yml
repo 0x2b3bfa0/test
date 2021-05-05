@@ -1,9 +1,8 @@
 on:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+      - uses: 0x2b3bfa0/setup-cml@master
       - uses: mxschmitt/action-tmate@v3
