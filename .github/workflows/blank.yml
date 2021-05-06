@@ -2,6 +2,6 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: mxschmitt/action-tmate@v3
