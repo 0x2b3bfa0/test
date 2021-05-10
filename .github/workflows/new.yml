@@ -1,0 +1,9 @@
+on:
+  release:
+    types: [published]
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo => ${{ github.ref }}
