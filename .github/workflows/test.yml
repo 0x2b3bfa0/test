@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    environment: ${{ true && 'one' || 'two' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo SECRET_ONE=$SECRET_ONE
+          echo SECRET_TWO=$SECRET_TWO
+        env:
+          SECRET_ONE: ${{ secrets.SECRET_TWO }}
+          SECRET_TWO: ${{ secrets.SECRET_ONE }}
