@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    environment: ${{ true && 'one' || 'two' }}
+    environment: ${{ false && 'one' || 'two' }}
     runs-on: ubuntu-latest
     steps:
       - run: |
