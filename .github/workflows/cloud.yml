@@ -12,9 +12,12 @@ jobs:
           --cloud-type=g3.4xlarge \
           --cloud-hdd-size 64 \
           --labels=cml-runner \
-          --cloud-ssh-private="$AWS_SSH"
+          --cloud-ssh-private="$(
+            ssh-keygen -t rsa -N "" -b 4096 -f "$(mktemp -u)" &>/dev/null
+            perl -pe 's/\n/\\n/g' "$_"
+            rm "$_"
+          )"
         env:
-          AWS_SSH: ${{ secrets.AWS_SSH }}
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
