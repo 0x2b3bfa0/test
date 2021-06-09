@@ -1,0 +1,26 @@
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - run: >-
+          cml-runner
+          --cloud-spot
+          --cloud azure
+          --cloud-region eastus
+          --cloud-type Standard_NC6
+          --idle-timeout 3600
+          --labels=az-cml-runner-gpu
+        env:
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  run:
+    needs: deploy
+    runs-on: self-hosted
+    steps:
+      - uses: mxschmitt/action-tmate@v3
