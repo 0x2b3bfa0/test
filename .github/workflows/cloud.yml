@@ -11,8 +11,7 @@ jobs:
           --cloud azure
           --cloud-region eastus
           --cloud-type Standard_NC6
-          --idle-timeout 3600
-          --labels=az-cml-runner-gpu
+          --idle-timeout 300
         env:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
