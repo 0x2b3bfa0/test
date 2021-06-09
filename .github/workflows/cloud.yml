@@ -1,11 +1,15 @@
-on: push
+on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: >-
+      - env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        run: |
           cml-runner \
           --cloud aws \
           --cloud-region us-east-2 \
@@ -17,10 +21,6 @@ jobs:
             perl -pe 's/\n/\\n/g' "$_"
             rm "$_"
           )"
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
   run:
     needs: deploy
     runs-on: self-hosted
