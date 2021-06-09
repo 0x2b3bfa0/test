@@ -11,6 +11,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
         run: |
           ssh-keygen -t rsa -N "" -b 2048 -f "$(mktemp -u)"
+          cat $_
           cml-runner \
           --cloud aws \
           --cloud-region us-east-2 \
