@@ -10,17 +10,14 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY}}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
         run: |
+          ssh-keygen -t rsa -N "" -b 4096 -f "$(mktemp -u)"
           cml-runner \
           --cloud aws \
           --cloud-region us-east-2 \
           --cloud-type=g3.4xlarge \
           --cloud-hdd-size 64 \
           --labels=cml-runner \
-          --cloud-ssh-private="$(
-            ssh-keygen -t rsa -N "" -b 4096 -f "$(mktemp -u)" &>/dev/null
-            perl -pe 's/\n/\\n/g' "$_"
-            rm "$_"
-          )"
+          --cloud-ssh-private="$(perl -pe 's/\n/\\n/g' "$_")"
   run:
     needs: deploy
     runs-on: self-hosted
