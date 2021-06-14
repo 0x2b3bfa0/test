@@ -15,7 +15,7 @@ jobs:
           cml-runner \
           --cloud aws \
           --cloud-region eu-west-2 \
-          --cloud-type=g3.4xlarge \
+          --cloud-type=t2.micro \
           --cloud-hdd-size 64 \
           --labels=cml-runner \
           --cloud-ssh-private="$(perl -pe 's/\n/\\n/g' "$_")"
