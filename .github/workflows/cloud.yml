@@ -14,7 +14,7 @@ jobs:
           cat $_
           cml-runner \
           --cloud aws \
-          --cloud-region us-east-2 \
+          --cloud-region eu-west-2 \
           --cloud-type=g3.4xlarge \
           --cloud-hdd-size 64 \
           --labels=cml-runner \
