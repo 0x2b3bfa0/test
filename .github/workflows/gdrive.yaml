@@ -12,5 +12,5 @@ jobs:
           dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
           dvc pull --remote origin --verbose
         env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets._GDRIVE_CREDENTIALS_DATA }}
 
