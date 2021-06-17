@@ -1,15 +1,16 @@
 on: push
 jobs:
   run:
-  runs-on: [ubuntu-latest]
-  steps:
-    - run: |
-        git init
-        dvc init
-        dvc remote add --default origin gdrive://root
-        dvc remote modify origin --local gdrive_use_service_account true
-        dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
-        dvc pull --remote origin --verbose
-      env:
-        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: iterative/setup-dvc@v1
+      - run: |
+          git init
+          dvc init
+          dvc remote add --default origin gdrive://root
+          dvc remote modify origin --local gdrive_use_service_account true
+          dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
+          dvc pull --remote origin --verbose
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
 
