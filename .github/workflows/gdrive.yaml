@@ -11,7 +11,7 @@ jobs:
           
           dvc remote add origin gdrive://root
           dvc remote modify origin --local gdrive_use_service_account true
-          # dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
+          dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
           dvc doctor
           date > file
           dvc add file
