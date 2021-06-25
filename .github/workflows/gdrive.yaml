@@ -5,6 +5,7 @@ jobs:
     steps:
       - uses: iterative/setup-dvc@v1
       - run: |
+          set +x
           git init
           dvc init
           
