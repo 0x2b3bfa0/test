@@ -1,4 +1,4 @@
-on: push
+on: workflow_dispatch
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -11,13 +11,16 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: >-
           cml-runner
-          --cloud aws
-          --cloud-region us-west-1
-          --cloud-type=t2.micro
-          --idle-timeout 60
-  train:
+          --cloud=aws
+          --cloud-region=eu-west
+          --cloud-type=c5a.4xlarge
+          --cloud-spot=true
+          --idle-timeout=60
+          --labels=debug
+  test:
     needs: deploy
-    runs-on: self-hosted
-    container: docker://dvcorg/cml:0-dvc2-base1
+    runs-on: [self-hosted, debug]
     steps:
-      - uses: mxschmitt/action-tmate@v3
+      - run: |
+          cat /etc/docker/daemon.json || true
+          docker run --rm -it dvcorg/cml:0-dvc2-base1 date || true
