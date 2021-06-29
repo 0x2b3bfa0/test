@@ -12,9 +12,8 @@ jobs:
         run: >-
           cml-runner
           --cloud=aws
-          --cloud-region=eu-west
-          --cloud-type=c5a.4xlarge
-          --cloud-spot=true
+          --cloud-region=us-west-1
+          --cloud-type=t2.micro
           --idle-timeout=60
           --labels=debug
   test:
