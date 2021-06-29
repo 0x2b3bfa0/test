@@ -6,21 +6,18 @@ jobs:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - env:
-          repo_token: ${{ secrets.REPO_TOKEN }}
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          ssh-keygen -t rsa -m pem -N "" -b 2048 -f "$(mktemp -u)"
-          cat $_
-          cml-runner \
-          --cloud aws \
-          --cloud-region eu-west-2 \
-          --cloud-type=t2.micro \
-          --cloud-hdd-size 64 \
-          --labels=cml-runner \
-          --cloud-ssh-private="$(perl -pe 's/\n/\\n/g' "$_")"
-  run:
+        run: >-
+          cml-runner
+          --cloud aws
+          --cloud-region us-west-1
+          --cloud-type=t2.micro
+          --idle-timeout 60
+  train:
     needs: deploy
     runs-on: self-hosted
+    container: docker://dvcorg/cml:0-dvc2-base1
     steps:
       - uses: mxschmitt/action-tmate@v3
