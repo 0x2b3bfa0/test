@@ -5,9 +5,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: |
-          sudo npm install --global git+https://github.com/iterative/cml#fix-pull-request-references
-          date > file
-          cml-pr file
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
