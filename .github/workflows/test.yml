@@ -8,3 +8,5 @@ jobs:
       - run: |
           date > file
           cml-pr file
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
