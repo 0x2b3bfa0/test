@@ -1,18 +1,20 @@
 on: pull_request
+env:
+  GITHUB_TOKEN: ${{ github.token }}
 jobs:
-  test:
+  fail:
     runs-on: ubuntu-latest
-    strategy: {matrix: {fetch: [false, true]}}
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      
-      - if: matrix.fetch
-        run: git fetch ${remote} ${sha}
-        env:
-          remote: origin
-          sha: ${{ github.event.pull_request.head.sha }}
-          
       - run: date > file && cml-pr file
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+  succeed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - run: git fetch origin ${{ github.event.pull_request.head.sha }}
+      - run: date > file && cml-pr file
+      
+
+       
