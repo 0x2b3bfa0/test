@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo npm install --global https://github.com/iterative/cml#fix-pull-request-references
+      - run: |
+          sudo npm config set user 0
+          sudo npm install --global https://github.com/iterative/cml#fix-pull-request-references
       - if: matrix.fetch
         run: git fetch origin ${{ github.event.pull_request.head.sha }}
       - run: date > file && cml-pr file
