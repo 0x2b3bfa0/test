@@ -17,7 +17,9 @@ jobs:
       - run: |
           echo "$PARAMETERS" > params.json
           git add params.json
-          git commit
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git commit --message "Update params.json"
           git push
         env:
           PARAMETERS: ${{ toJSON(github.event.inputs) }}
@@ -28,4 +30,4 @@ jobs:
       - uses: iterative/setup-dvc@v1
       - uses: iterative/setup-cml@v1
       - run: |
-          dvc run --params params.json:epochs,layers ···
+          echo dvc run --params params.json:epochs,layers ···
