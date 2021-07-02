@@ -16,10 +16,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: iterative/setup-dvc@v1
       - uses: iterative/setup-cml@v1
-      - run: echo "$PARAMETERS" > params.json
-        env:
-          PARAMETERS: ${{ toJSON(github.event.inputs) }}
       - run: |
+          echo "$PARAMETERS" > params.json
           # dvc run --params params.json:epochs,layers ···
           
           cml-send-comment /dev/stdin <<-END
@@ -30,4 +28,5 @@ jobs:
             _Note: you can merge $(cml-pr params.json) to save the new parameters._
           END
         env:
+          PARAMETERS: ${{ toJSON(github.event.inputs) }}
           GITHUB_TOKEN: ${{ github.token }}
