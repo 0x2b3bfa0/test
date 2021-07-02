@@ -40,15 +40,11 @@ jobs:
       - run: |
           echo dvc run --params params.json:epochs,layers ···
           
-          cml-send-comment /dev/stdin <<END
-          > ## Hyperparameters
-          > $(dvc params diff --show-md --targets params.json HEAD)
+          cml-send-comment /dev/stdin <<-END
+            ## Hyperparameters
+            $(dvc params diff --show-md --targets params.json HEAD)
           END
           
-          git add params.json
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git commit --message "Update params.json"
-          git push
+          cml-pr params.json
         env:
           GITHUB_TOKEN: ${{ github.token }}
