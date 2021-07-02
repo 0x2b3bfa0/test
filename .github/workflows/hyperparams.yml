@@ -10,21 +10,6 @@ on:
         description: Number of layers
         default: 9
 jobs:
-  commit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          echo "$PARAMETERS" > params.json
-          git add params.json
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git commit --message "Update params.json"
-          git push
-        env:
-          PARAMETERS: ${{ toJSON(github.event.inputs) }}
-      - run: echo "::set-output name=hash::$(git rev-parse HEAD)"
-        id: reference
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -36,23 +21,27 @@ jobs:
           --cloud-region=us-west
           --cloud-type=t2.micro
           --labels=cloud
+          --reuse
         env:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   train:
-    needs:
-      - commit
-      - deploy
-    runs-on:
-      - self-hosted
-      - cloud
+    needs: deploy
+    runs-on: [self-hosted, cloud]
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ needs.commit.reference.hash }}
       - uses: iterative/setup-dvc@v1
       - uses: iterative/setup-cml@v1
+      - run: |
+          echo "$PARAMETERS" > params.json
+          git add params.json
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git commit --message "Update params.json"
+          git push
+        env:
+          PARAMETERS: ${{ toJSON(github.event.inputs) }}
       - run: |
           echo dvc run --params params.json:epochs,layers ···
           
