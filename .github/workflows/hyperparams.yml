@@ -22,7 +22,9 @@ jobs:
         env:
           PARAMETERS: ${{ toJSON(github.event.inputs) }}
   train:
-    needs: deploy
+    needs: save
+    runs-on: ubuntu-latest
+    steps:
       - uses: iterative/setup-dvc@v1
       - uses: iterative/setup-cml@v1
       - run: |
