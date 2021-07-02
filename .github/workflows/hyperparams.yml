@@ -10,25 +10,8 @@ on:
         description: Number of layers
         default: 9
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
-      - run: >-
-          cml-runner
-          --cloud=aws
-          --cloud-region=us-west
-          --cloud-type=t2.micro
-          --labels=cloud
-          --reuse
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   train:
-    needs: deploy
-    runs-on: [self-hosted, cloud]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-dvc@v1
