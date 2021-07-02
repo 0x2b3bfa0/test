@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+    inputs:
+      epochs:
+        required: true
+        description: Number of epochs
+        default: 70
+      layers:
+        required: true
+        description: Number of layers
+        default: 9
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "$PARAMETERS" > params.json
+          git add params.json
+          git commit
+          git push
+        env:
+          PARAMETERS: ${{ toJSON(github.event.inputs) }}
+  deploy:
+    needs: save
+    ···
+  train:
+    needs: deploy
+      - uses: iterative/setup-dvc@v1
+      - uses: iterative/setup-cml@v1
+      - run: |
+          dvc run --params params.json:epochs,layers ···
