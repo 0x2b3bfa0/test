@@ -10,7 +10,7 @@ on:
         description: Number of layers
         default: 9
 jobs:
-  save:
+  commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,10 +23,12 @@ jobs:
           git push
         env:
           PARAMETERS: ${{ toJSON(github.event.inputs) }}
+      - run: echo "::set-output name=hash::$(git rev-parse HEAD)"
+        id: reference
   deploy:
-    needs: save
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - run: >-
           cml-runner
@@ -39,13 +41,20 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   train:
-    needs: deploy
-    runs-on: [self-hosted, cloud]
+    needs:
+      - commit
+      - deploy
+    runs-on:
+      - self-hosted
+      - cloud
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.commit.reference.hash }}
       - uses: iterative/setup-dvc@v1
       - uses: iterative/setup-cml@v1
       - run: |
-          dvc run --params params.json:epochs,layers ···
+          echo dvc run --params params.json:epochs,layers ···
           
           cml-send-comment /dev/stdin <<END
           > ## Hyperparameters
