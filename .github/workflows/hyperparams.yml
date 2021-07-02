@@ -37,8 +37,7 @@ jobs:
         env:
           PARAMETERS: ${{ toJSON(github.event.inputs) }}
       - run: |
-          echo dvc run --params params.json:epochs,layers ···
-          
+          # dvc run --params params.json:epochs,layers ···
           cml-send-comment /dev/stdin <<-END
             ## Hyperparameters
             $(dvc params diff --show-md --targets params.json HEAD)
