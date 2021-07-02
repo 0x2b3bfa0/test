@@ -42,8 +42,7 @@ jobs:
           cml-send-comment /dev/stdin <<-END
             ## Hyperparameters
             $(dvc params diff --show-md --targets params.json HEAD)
+            _Note: you can merge $(cml-pr params.json) to save the new parameters._
           END
-          
-          cml-pr params.json
         env:
           GITHUB_TOKEN: ${{ github.token }}
