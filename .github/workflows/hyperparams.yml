@@ -21,9 +21,6 @@ jobs:
           git push
         env:
           PARAMETERS: ${{ toJSON(github.event.inputs) }}
-  deploy:
-    needs: save
-    ···
   train:
     needs: deploy
       - uses: iterative/setup-dvc@v1
