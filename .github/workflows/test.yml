@@ -1,7 +1,4 @@
 on: push
-defaults:
-  run:
-    shell: bash
 jobs:
   mount:
     runs-on: ubuntu-latest
@@ -12,7 +9,7 @@ jobs:
           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
           sudo apt update
       - run: |
-          sudo apt install fuse gcsfuse
+          sudo apt install kmod fuse gcsfuse
           sudo modprobe fuse
       - run: |
           echo "$GOOGLE_SERVICE_ACCOUNT" | tee "$(mktemp)" > /dev/null
