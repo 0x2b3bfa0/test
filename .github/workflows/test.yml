@@ -1,13 +1,23 @@
 on: push
 jobs:
-  test:
+  mount:
     runs-on: ubuntu-latest
     container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
-      - uses: actions/checkout@v2
       - run: |
-          cml-send-comment --version || true
-          cml-send-comment -v || true
-          cml-send-comment -h
-
-       
+          sudo tee /etc/apt/sources.list.d/gcsfuse.list <<< "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -cs) main"
+          sudo apt-key add <(curl https://packages.cloud.google.com/apt/doc/apt-key.gpg)
+          sudo apt-get update
+      - run: |
+          sudo apt-get install fuse gcsfuse
+      - run: |
+          tee "$(mktemp)" <<< "$GOOGLE_SERVICE_ACCOUNT" > /dev/null
+          export GOOGLE_APPLICATION_CREDENTIALS="$_"
+          gcsfuse "$GOOGLE_CLOUD_STORAGE_BUCKET" "$(mktemp -d)"
+          echo "$_"
+        env:
+          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          GOOGLE_CLOUD_STORAGE_BUCKET: cml-benchmark-volume
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
