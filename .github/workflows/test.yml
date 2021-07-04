@@ -1,4 +1,7 @@
 on: push
+defaults:
+  run:
+    shell: bash
 jobs:
   mount:
     runs-on: ubuntu-latest
