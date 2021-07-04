@@ -8,13 +8,14 @@ jobs:
     container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - run: |
-          sudo tee /etc/apt/sources.list.d/gcsfuse.list <<< "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -cs) main"
+          echo "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gcsfuse.list
           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-          sudo apt-get update
+          sudo apt update
       - run: |
-          sudo apt-get install fuse gcsfuse
+          sudo apt install fuse gcsfuse
+          sudo modprobe fuse
       - run: |
-          tee "$(mktemp)" <<< "$GOOGLE_SERVICE_ACCOUNT" > /dev/null
+          echo "$GOOGLE_SERVICE_ACCOUNT" | tee "$(mktemp)" > /dev/null
           export GOOGLE_APPLICATION_CREDENTIALS="$_"
           gcsfuse "$GOOGLE_CLOUD_STORAGE_BUCKET" "$(mktemp -d)"
           echo "$_"
