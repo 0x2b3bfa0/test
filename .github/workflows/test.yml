@@ -9,7 +9,7 @@ jobs:
     steps:
       - run: |
           sudo tee /etc/apt/sources.list.d/gcsfuse.list <<< "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -cs) main"
-          sudo apt-key add <(curl https://packages.cloud.google.com/apt/doc/apt-key.gpg)
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
           sudo apt-get update
       - run: |
           sudo apt-get install fuse gcsfuse
