@@ -1,26 +1,26 @@
 on: workflow_dispatch
-permissions: write-all
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - env:
-          REPO_TOKEN: ${{ github.token }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: >-
+      - run: >-
           cml-runner
           --cloud=aws
           --cloud-region=us-west-1
-          --cloud-type=t2.micro
-          --idle-timeout=60
-          --labels=debug
-  test:
+          --cloud-type=g3.4xlarge
+          --idle-timeout=30
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-west-1
+  train:
     needs: deploy
-    runs-on: [self-hosted, debug]
+    runs-on: self-hosted
+    container:
+      image: docker://iterativeai/cml:0-dvc2-base0-gpu
+      options: --gpus all
     steps:
-      - run: |
-          cat /etc/docker/daemon.json || true
-          docker run --rm -it dvcorg/cml:0-dvc2-base1 date || true
+      - run: nvidia-smi
