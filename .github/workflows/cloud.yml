@@ -10,7 +10,6 @@ jobs:
           --cloud=aws
           --cloud-region=us-west-1
           --cloud-type=g3.4xlarge
-          --idle-timeout=30
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
