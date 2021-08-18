@@ -1,21 +1,15 @@
 on: workflow_dispatch
-env:
-  TF_LOG: trace
-  TF_LOG_PATH: /tmp/terraform.log
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: |
-          cml-runner \
-          --cloud=aws \
-          --cloud-region=us-west-1 \
-          --cloud-type=g3.4xlarge &
-          RUNNER_PID=$!
-          tail -f "$TF_LOG_PATH" &
-          wait $RUNNER_PID
+      - run: >-
+          cml-runner
+          --cloud=aws
+          --cloud-region=us-west-1
+          --cloud-type=g3.4xlarge
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
