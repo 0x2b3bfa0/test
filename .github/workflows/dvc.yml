@@ -2,6 +2,6 @@ on: workflow_dispatch
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: iterativeai/cml
+    container: 0x2b3bfa0/test
     steps:
       - run: dvc doctor
