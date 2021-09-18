@@ -3,4 +3,4 @@ jobs:
   test:
     runs-on: self-hosted
     steps:
-      run: env
+      - run: env
