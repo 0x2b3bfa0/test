@@ -2,5 +2,8 @@ on: workflow_dispatch
 jobs:
   test:
     runs-on: self-hosted
+    container: docker://alpine
     steps:
-      - run: env | grep CASPER
+      - run: env | grep YOU_ARE
+        env:
+          YOU_ARE_SECURE: ${{ env.YOU_ARE_RIGHT }}
