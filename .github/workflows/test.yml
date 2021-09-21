@@ -1,9 +1,9 @@
-on: push
+on: workflow_dispatch
 jobs:
   mount:
     runs-on: ubuntu-latest
-    container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
+      - uses: iterative/setup-cml@v1
       - uses: mxschmitt/action-tmate@v3
         with:
           limit-access-to-actor: true
