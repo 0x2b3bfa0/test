@@ -5,25 +5,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: >-
-          cml-runner
-          --single
-          --idle-timeout=1800
-          --cloud=gcp
-          --cloud-region=us-west
-          --cloud-type=m
-          --cloud-gpu=nogpu
-          --cloud-hdd-size=10 || true
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
-          TF_LOG: DEBUG
-          TF_LOG_PATH: /tmp/terraform.log
-      - run: cat /tmp/terraform.log
-  train:
-    needs: deploy
-    runs-on: self-hosted
-    container:
-      image: docker://iterativeai/cml:0-dvc2-base1
-    steps:
-      - run: echo yes
+     
