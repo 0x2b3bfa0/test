@@ -1,11 +1,9 @@
 on: workflow_dispatch
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: iterative/setup-cml@v1
       - uses: mxschmitt/action-tmate@v3
-        if: failure()
         with:
           limit-access-to-actor: true
       
