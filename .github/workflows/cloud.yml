@@ -7,18 +7,23 @@ jobs:
       - uses: iterative/setup-cml@v1
       - run: >-
           cml-runner
-          --cloud=aws
-          --cloud-region=us-west-1
-          --cloud-type=g3.4xlarge
+          --single
+          --idle-timeout=1800
+          --cloud=gcp
+          --cloud-region=us-west
+          --cloud-type=m
+          --cloud-gpu=nogpu
+          --cloud-hdd-size=10 || true
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}	
+          GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          TF_LOG: DEBUG
+          TF_LOG_PATH: /tmp/terraform.log
+      - run: cat /tmp/terraform.log
   train:
     needs: deploy
     runs-on: self-hosted
     container:
-      image: docker://iterativeai/cml:0-dvc2-base0-gpu
-      options: --gpus all
+      image: docker://iterativeai/cml:0-dvc2-base1
     steps:
-      - run: nvidia-smi
+      - run: echo yes
