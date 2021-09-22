@@ -1,14 +1,6 @@
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 jobs:
-  build:
-    runs-on: [self-hosted]
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-        env:
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}	
+      - run: env | grep RUNNER_
