@@ -5,7 +5,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: iterative/setup-cml@v1
-    - run: cml runner --cloud=aws --cloud-type=p2.xlarge --labels=gpu
+    - run: echo
       env:
         REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}             
