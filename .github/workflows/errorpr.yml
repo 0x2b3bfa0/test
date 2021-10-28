@@ -1,0 +1,15 @@
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/cml@v1
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: cml pr <(date)
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: cml send-comment --pr --update <(date +%s)
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
