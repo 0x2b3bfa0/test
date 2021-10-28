@@ -13,6 +13,8 @@ jobs:
       - uses: mxschmitt/action-tmate@v3
         with:
           limit-access-to-actor: true
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: cml send-comment --pr --update <(date +%s)
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
