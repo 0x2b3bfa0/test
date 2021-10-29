@@ -3,18 +3,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - uses: iterative/setup-cml@v1
+      
       - run: date > file && cml pr file
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: cml send-comment --pr --update <(date +%s)
+          
+      - run: GITHUB_SHA=$(git rev-parse HEAD) cml send-comment --pr --update <(date)
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
