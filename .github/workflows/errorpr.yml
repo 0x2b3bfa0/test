@@ -4,4 +4,4 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
     steps:
-      - run: echo done
+      - run: echo done 1
