@@ -1,7 +1,10 @@
-on: push
+on: pull_request
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    environment: test
     steps:
-      - run: echo done 1
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - run: |
+          date > file
+          gh pr merge $(cml pr file)
