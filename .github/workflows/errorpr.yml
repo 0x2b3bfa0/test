@@ -7,6 +7,4 @@ jobs:
       - uses: iterative/setup-cml@v1
       - run: |
           date > file
-          gh pr merge $(cml pr file)
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+          gh pr merge --rebase $(cml pr file)
