@@ -9,20 +9,22 @@ jobs:
       - id: matrix
         run: |
           python3 <<'END'
-          import json
-          import secrets
+          from json import load, dumps
+          from secrets import token_hex
+          from urllib.parse import quote
           with open("./matrix.json", "r") as file:
-              items = set(json.dumps(item, sort_keys=True) for item in json.load(file))
-              matrix = {secrets.token_hex(16): item for item in set(items)}
+              items = set(dumps(item, sort_keys=True) for item in load(file))
+              matrix = {token_hex(16): item for item in set(items)}
               output = json.dumps(
                   {
                       "runner": list(matrix.keys()),
                       "include": [
-                          {"runner": key, "item": value} for key, value in matrix.items()
+                          {"runner": key, "item": value}
+                          for key, value in matrix.items()
                       ],
                   }
               )
-              print("::set-output name=matrix::" + output.replace("%", "%25").replace("\n", "%0A").replace("\r", "%0D"))
+              print(f"::set-output name=matrix::{quote(output)}")
           END
   deploy:
     needs: matrix
@@ -42,7 +44,7 @@ jobs:
   train:
     needs: deploy
     strategy:
-      matrix: ${{ needs.deploy.strategy.matrix }}
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v2
