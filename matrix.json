@@ -1,11 +1,14 @@
 [
   {
-    "epochs": 3
+    "epochs": 3,
+    "threshold": 33
   },
   {
-    "epochs": 5
+    "epochs": 5,
+    "threshold": 55
   },
   {
-    "epochs": 7
+    "epochs": 7,
+    "threshold": 77
   }
 ]
