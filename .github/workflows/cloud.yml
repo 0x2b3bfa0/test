@@ -28,7 +28,7 @@ jobs:
   train:
     needs: deploy
     strategy:
-      matrix: ${{ jobs.deploy.strategy.matrix }}
+      matrix: ${{ needs.deploy.strategy.matrix }}
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v2
