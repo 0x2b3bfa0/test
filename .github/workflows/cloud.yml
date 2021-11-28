@@ -1,14 +1,40 @@
 on: workflow_dispatch
 jobs:
   deploy:
+    strategy:
+      matrix:
+        runner:
+          - ${{ github.run_id }}-1
+          - ${{ github.run_id }}-2
+          - ${{ github.run_id }}-3
+        include:
+          - runner: ${{ github.run_id }}-1
+            epochs: 4
+          - runner: ${{ github.run_id }}-2
+            epochs: 8
+          - runner: ${{ github.run_id }}-3
+            epochs: 16
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
+      - run: cml runner --single --cloud=aws
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-          GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          CML_RUNNER_LABELS: ${{ matrix.runner }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+  train:
+    strategy:
+      matrix: ${{ jobs.deploy.strategy.matrix }}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - run: |
+          echo ${{ matrix.epochs }} > epochs.txt
+          cml pr epochs.txt
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
      
