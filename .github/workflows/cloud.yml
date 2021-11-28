@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: cml runner --single --cloud=aws
+      - run: cml runner --single --reuse --cloud=aws
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           CML_RUNNER_LABELS: ${{ matrix.runner }}
