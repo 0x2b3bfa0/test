@@ -24,7 +24,10 @@ jobs:
                       ],
                   }
               )
-              print(f"::set-output name=matrix::{quote(output)}")
+              output = output.replace("%", "%25")
+              output = output.replace("\r", "%0D")
+              output = output.replace("\n", "%0A")
+              print(f"::set-output name=matrix::{output}")
           END
   deploy:
     needs: matrix
