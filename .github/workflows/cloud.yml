@@ -17,7 +17,7 @@ jobs:
               print(
                   json.dumps(
                       {
-                          "runner": matrix.keys(),
+                          "runner": list(matrix.keys()),
                           "include": [
                               {"runner": key, "item": value} for key, value in matrix.items()
                           ],
