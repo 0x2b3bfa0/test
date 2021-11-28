@@ -1,19 +1,33 @@
 on: workflow_dispatch
 jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - id: matrix
+        run: |
+          python3 <<'END'
+          import json
+          import secrets
+          with open("./matrix.json", "r") as file:
+              items = set(json.dumps(item, sort_keys=True) for item in json.load(file))
+              matrix = {secrets.token_hex(16): item for item in set(items)}
+              print(
+                  json.dumps(
+                      {
+                          "runner": matrix.keys(),
+                          "include": [
+                              {"runner": key, "item": value} for key, value in matrix.items()
+                          ],
+                      }
+                  )
+              )
+          END
   deploy:
+    needs: matrix
     strategy:
-      matrix:
-        runner:
-          - ${{ github.run_id }}-1
-          - ${{ github.run_id }}-2
-          - ${{ github.run_id }}-3
-        include:
-          - runner: ${{ github.run_id }}-1
-            epochs: 4
-          - runner: ${{ github.run_id }}-2
-            epochs: 8
-          - runner: ${{ github.run_id }}-3
-            epochs: 16
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,8 +48,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - run: |
-          echo ${{ matrix.epochs }} > epochs.txt
-          cml pr epochs.txt
+          echo "$FOREACH_ITEM_JSON" > item.json
+          cml pr item.json
         env:
+          FOREACH_ITEM_JSON: ${{ toJson(matrix.item) }}
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-     
