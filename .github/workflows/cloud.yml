@@ -15,15 +15,14 @@ jobs:
           with open("./matrix.json", "r") as file:
               items = set(dumps(item, sort_keys=True) for item in load(file))
               matrix = {token_hex(16): item for item in set(items)}
-              output = dumps(
-                  {
-                      "runner": list(matrix.keys()),
-                      "include": [
-                          {"runner": key, "item": value}
-                          for key, value in matrix.items()
-                      ],
-                  }
-              )
+              github_matrix = {
+                  "runner": list(matrix.keys()),
+                  "include": [
+                      {"runner": key, "item": value}
+                      for key, value in matrix.items()
+                  ],
+              }
+              output = dumps(github_matrix)
               output = output.replace("%", "%25")
               output = output.replace("\r", "%0D")
               output = output.replace("\n", "%0A")
