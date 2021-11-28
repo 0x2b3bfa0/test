@@ -15,7 +15,7 @@ jobs:
           with open("./matrix.json", "r") as file:
               items = set(dumps(item, sort_keys=True) for item in load(file))
               matrix = {token_hex(16): item for item in set(items)}
-              output = json.dumps(
+              output = dumps(
                   {
                       "runner": list(matrix.keys()),
                       "include": [
