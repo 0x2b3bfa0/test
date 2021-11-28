@@ -14,16 +14,15 @@ jobs:
           with open("./matrix.json", "r") as file:
               items = set(json.dumps(item, sort_keys=True) for item in json.load(file))
               matrix = {secrets.token_hex(16): item for item in set(items)}
-              print(
-                  json.dumps(
-                      {
-                          "runner": list(matrix.keys()),
-                          "include": [
-                              {"runner": key, "item": value} for key, value in matrix.items()
-                          ],
-                      }
-                  )
+              output = json.dumps(
+                  {
+                      "runner": list(matrix.keys()),
+                      "include": [
+                          {"runner": key, "item": value} for key, value in matrix.items()
+                      ],
+                  }
               )
+              print("::set-output name=matrix::" + output.replace("%", "%25").replace("\n", "%0A").replace("\r", "%0D"))
           END
   deploy:
     needs: matrix
