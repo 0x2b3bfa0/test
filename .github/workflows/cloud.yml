@@ -1,59 +1,50 @@
 on: workflow_dispatch
 jobs:
-  matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v2
-      - id: matrix
-        run: |
-          python3 <<'END'
-          from json import load, dumps
-          from secrets import token_hex
-          from urllib.parse import quote
-          with open("./matrix.json", "r") as file:
-              items = set(dumps(item, sort_keys=True) for item in load(file))
-              matrix = {token_hex(16): item for item in set(items)}
-              github_matrix = {
-                  "runner": list(matrix.keys()),
-                  "include": [
-                      {"runner": key, "item": value}
-                      for key, value in matrix.items()
-                  ],
-              }
-              output = dumps(github_matrix)
-              output = output.replace("%", "%25")
-              output = output.replace("\r", "%0D")
-              output = output.replace("\n", "%0A")
-              print(f"::set-output name=matrix::{output}")
-          END
   deploy:
-    needs: matrix
-    strategy:
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/upload-artifact@v2
+        with:
+          name: state
+          path: terraform.tfstate
       - uses: iterative/setup-cml@v1
-      - run: echo
+      - run: terraform init && terraform apply --auto-approve
         env:
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-          CML_RUNNER_LABELS: ${{ matrix.runner }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          
+          TF_VAR_parallelism: 4
+          TF_VAR_name: ${{ github.job_id }}
+          
+          CML_RUNNER_LABELS: cml-matrix-${{ github.job_id }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   train:
     needs: deploy
     strategy:
-      matrix: ${{ needs.deploy.strategy.matrix }}
-    runs-on: ubuntu-latest
+      matrix:
+        epochs: [3, 5, 7, 9]
+    runs-on: cml-matrix-${{ github.job_id }}
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - run: |
-          echo "$FOREACH_ITEM_JSON" > item.json
-          cml pr item.json
+          echo "$MATRIX_EPOCH" > epoch.txt
+          cml pr epoch.txt
         env:
-          FOREACH_ITEM_JSON: ${{ toJson(matrix.item) }}
+          MATRIX_EPOCH: ${{ matrix.epoch }}
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  destroy:
+    if: always()
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: state
+          path: terraform.tfstate
+      - run: terraform init && terraform destroy --auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
