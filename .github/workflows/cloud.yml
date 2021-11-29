@@ -29,7 +29,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: state
-          path: terraform.tfstate
       - run: |
           terraform init
           while sleep 8; do
@@ -56,10 +55,10 @@ jobs:
     needs: train
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
           name: state
-          path: terraform.tfstate
       - run: |
           terraform init
           terraform destroy --auto-approve
