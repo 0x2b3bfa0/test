@@ -21,6 +21,21 @@ jobs:
         with:
           name: state
           path: terraform.tfstate
+  debug:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: state
+          path: terraform.tfstate
+      - run: |
+          terraform init
+          while sleep 8; do
+            terraform refresh
+            terraform show
+          done
   train:
     needs: deploy
     strategy:
