@@ -8,8 +8,13 @@ terraform {
 
 provider "iterative" {}
 
-variable "name" {}
-variable "parallelism" {}
+variable "name" {
+  default = "runner"
+}
+
+variable "parallelism" {
+  default = 1
+}
 
 resource "iterative_task" "runners" {
   cloud       = "aws"
