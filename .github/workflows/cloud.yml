@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - run: cml runner --single --cloud=aws
+      - run: echo
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           CML_RUNNER_LABELS: ${{ matrix.runner }}
@@ -47,7 +47,7 @@ jobs:
     needs: deploy
     strategy:
       matrix: ${{ needs.deploy.strategy.matrix }}
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
