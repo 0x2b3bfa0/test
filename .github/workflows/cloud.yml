@@ -1,4 +1,10 @@
 on: workflow_dispatch
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+  TF_VAR_name: ${{ github.run_id }}
+  TF_VAR_parallelism: 4
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -8,13 +14,6 @@ jobs:
           terraform init
           terraform apply --auto-approve
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-          
-          TF_VAR_parallelism: 4
-          TF_VAR_name: ${{ github.run_id }}
-          
           CML_RUNNER_LABELS: cml-matrix-${{ github.run_id }}
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
       - uses: actions/upload-artifact@v2
@@ -62,7 +61,3 @@ jobs:
       - run: |
           terraform init
           terraform destroy --auto-approve
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
