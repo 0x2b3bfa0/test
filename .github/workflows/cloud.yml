@@ -11,9 +11,9 @@ jobs:
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
           
           TF_VAR_parallelism: 4
-          TF_VAR_name: ${{ github.job_id }}
+          TF_VAR_name: ${{ github.run_id }}
           
-          CML_RUNNER_LABELS: cml-matrix-${{ github.job_id }}
+          CML_RUNNER_LABELS: cml-matrix-${{ github.run_id }}
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         epochs: [3, 5, 7, 9]
-    runs-on: cml-matrix-${{ github.job_id }}
+    runs-on: cml-matrix-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
