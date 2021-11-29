@@ -29,7 +29,7 @@ jobs:
               print(f"::set-output name=matrix::{output}")
           END
   deploy:
-    needs: [matrix]
+    needs: matrix
     strategy:
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -44,9 +44,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
   train:
-    needs: [deploy, matrix]
+    needs: deploy
     strategy:
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+      matrix: ${{ needs.deploy.strategy.matrix }}
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v2
