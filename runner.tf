@@ -17,8 +17,11 @@ resource "iterative_task" "runners" {
   parallelism = var.parallelism
 
   environment = {
-    "REPO_TOKEN" = "",
     "CML_*" = "",
+    "GITHUB_*" = "",
+    "GITLAB_*" = "",
+    "BITBUCKET_*" = "",
+    "REPO_TOKEN" = "",
   }
 
   script = <<-END
