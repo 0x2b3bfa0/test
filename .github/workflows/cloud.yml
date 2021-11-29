@@ -33,7 +33,7 @@ jobs:
           while sleep 8; do
             terraform refresh
             terraform show
-          done
+          done &
   train:
     needs: deploy
     strategy:
