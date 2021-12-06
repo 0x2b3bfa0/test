@@ -7,9 +7,9 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14.x'
-    - run: |
-        set -x
-        sudo npm --version
-        npm --version
-        sudo node --version
-        node --version
+    - uses: iterative/setup-cml@v1
+      with:
+        sudo: false
+    - run: cml-publish /dev/null
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
