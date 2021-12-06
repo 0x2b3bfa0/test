@@ -8,8 +8,6 @@ jobs:
       with:
         node-version: '14.x'
     - uses: iterative/setup-cml@v1
-    - run: |
-        convert -size 100x100 xc:red test.png
-        cml-publish test.png
+    - run: cml-publish /dev/null
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
