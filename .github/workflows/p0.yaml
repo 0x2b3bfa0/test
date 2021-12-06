@@ -6,7 +6,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: iterative/setup-cml@v1
     - run: |
-        convert -size 100x100 -xc:red test.png
+        convert -size 100x100 xc:red test.png
         cml-publish test.png
       env:
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
