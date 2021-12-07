@@ -6,4 +6,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: echo yes
-      if: !github.event.pull_request.draft
+      if: ${{ ! github.event.pull_request.draft }}
