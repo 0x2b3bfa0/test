@@ -9,7 +9,7 @@ terraform {
 provider "iterative" {}
 
 variable "name" {
-  default = "runner"
+  default = "runner1"
 }
 
 variable "parallelism" {
