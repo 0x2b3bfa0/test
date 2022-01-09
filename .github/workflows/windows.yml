@@ -1,0 +1,8 @@
+on: push
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/setup-node@v2
+    - run: npm install winston@3.3.3
+    - run: node -e "require('winston')"
