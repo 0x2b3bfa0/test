@@ -3,4 +3,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: env | grep RUNNER_
+      - run: |
+          cat > main.tf <<END
+          terraform {
+            required_providers {
+              iterative = {
+                source  = "iterative/iterative"
+              }
+            }
+          }
+          END
+          terraform init
