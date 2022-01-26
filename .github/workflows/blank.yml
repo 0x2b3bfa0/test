@@ -1,16 +1,13 @@
-on: workflow_dispatch
+on: push
+permissions:
+  id-token: write
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          cat > main.tf <<END
-          terraform {
-            required_providers {
-              iterative = {
-                source  = "iterative/iterative"
-              }
-            }
-          }
-          END
-          terraform init
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: "arn:aws:iam::342840881361:role/github_actions_role"
+          role-session-name: test
+          aws-region: us-west-2
+      - run: aws s3 ls
