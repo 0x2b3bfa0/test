@@ -1,12 +1,12 @@
 on: push
-#permissions:
-#  id-token: write
+permissions:
+  id-token: write
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::342840881361:role/github_actions_role
           aws-region: us-west-2
+          role-to-assume: arn:aws:iam::342840881361:role/github_actions_role
       - run: aws s3 ls
