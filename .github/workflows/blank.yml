@@ -8,7 +8,7 @@ jobs:
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: us-east-1
-        role-to-assume: arn:aws:iam::260760892802:role/itm
+        role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
         role-session-name: GitHub
         role-duration-seconds: 3600
     - run: aws sts get-caller-identity
