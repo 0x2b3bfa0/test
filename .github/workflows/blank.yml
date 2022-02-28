@@ -3,6 +3,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: curl --silent --location "$ARTIFACT" | gunzip > /dev/null
+    - run: |
+        sudo apt update && sudo apt install --yes p7zip-full
+        curl --silent --location "$ARTIFACT" | gunzip > /dev/null || true
+        curl --silent --location "$ARTIFACT" | 7z x > /dev/null || true
+        curl --silent --location "$ARTIFACT" | tar xz > /dev/null || true
       env:
         ARTIFACT: https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz
