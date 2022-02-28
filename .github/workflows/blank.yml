@@ -2,28 +2,5 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        artifact:
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm-2.288.0-noruntime-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm-2.288.0-noruntime.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm-2.288.0.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm64-2.288.0-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm64-2.288.0-noruntime-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm64-2.288.0-noruntime.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-arm64-2.288.0.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-x64-2.288.0-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-x64-2.288.0-noruntime-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-x64-2.288.0-noruntime.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-linux-x64-2.288.0.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0-noruntime-noexternals.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0-noruntime.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-win-x64-2.288.0-noexternals.zip
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-win-x64-2.288.0-noruntime-noexternals.zip
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-win-x64-2.288.0-noruntime.zip
-        - https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-win-x64-2.288.0.zip
     steps:
-    - run: curl --location ${{ matrix.artifact }} | gunzip > /dev/null
+    - run: curl --location https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz | gunzip > /dev/null
