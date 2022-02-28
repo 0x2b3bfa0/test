@@ -3,4 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: curl --location https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz | gunzip > /dev/null
+    - run: curl --silent --location "$ARTIFACT" | gunzip > /dev/null
+      env:
+        ARTIFACT: https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz
