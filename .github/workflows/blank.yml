@@ -5,8 +5,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::260760892802:role/github_actions_role
-      - run: aws s3 ls
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::260760892802:role/itm
+        role-session-name: GitHub
+        role-duration-seconds: 3600
+    - run: aws sts get-caller-identity
