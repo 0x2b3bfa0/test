@@ -1,12 +1,10 @@
-on: push
+on: pull_request
+concurrency: ${{ github.workflow }}
 jobs:
   test:
     runs-on: ubuntu-latest
+    concurrency: 
+      group: ${{ github.head_ref || github.ref }}-${{ matrix.provider }}
+      cancel-in-progress: true
     steps:
-    - run: |
-        sudo apt update && sudo apt install --yes p7zip-full
-        curl --silent --location "$ARTIFACT" | gunzip > /dev/null || true
-        curl --silent --location "$ARTIFACT" | 7z x > /dev/null || true
-        curl --silent --location "$ARTIFACT" | tar xz > /dev/null || true
-      env:
-        ARTIFACT: https://github.com/actions/runner/releases/download/v2.288.0/actions-runner-osx-x64-2.288.0.tar.gz
+    - run: for ((count=0; count<10; count++)); do sleep 10; done
