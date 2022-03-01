@@ -20,7 +20,7 @@ resource "iterative_task" "runners" {
   cloud       = "aws" 
   name        = var.name
   parallelism = var.parallelism
-  directory   = "."
+  di rectory   = "."
 
   envir onment = {
     "CML_*" = "",
