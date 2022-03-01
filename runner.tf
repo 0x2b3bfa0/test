@@ -16,7 +16,7 @@ variable "parallelism" {
   default = 1
 }
 
-resource "iterative_task" "runners" {
+resource "iterative_task" "runners" { 
   cloud       = "aws" 
   name        = var.name
   parallelism = var.parallelism
