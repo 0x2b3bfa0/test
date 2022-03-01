@@ -22,7 +22,7 @@ resource "iterative_task" "runners" {
   parallelism = var.parallelism
   directory   = "."
 
-  environment = {
+  envir onment = {
     "CML_*" = "",
     "GITHUB_*" = "",
     "GITLAB_*" = "",
