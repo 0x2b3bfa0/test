@@ -4,7 +4,7 @@ terraform {
       source = "iterative/iterative",
     }
   }
-}
+} 
 
 provider "iterative" {}
 
