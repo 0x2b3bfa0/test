@@ -17,7 +17,7 @@ variable "parallelism" {
 }
 
 resource "iterative_task" "runners" {
-  cloud       = "aws"
+  cloud       = "aws" 
   name        = var.name
   parallelism = var.parallelism
   directory   = "."
