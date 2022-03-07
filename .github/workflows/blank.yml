@@ -1,11 +1,6 @@
-on: pull_request
-concurrency: 
-    group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-    cancel-in-progress: true      
+on: push     
 jobs:
   test:
     runs-on: ubuntu-latest
-    concurrency: 
-      group: ${{ github.workflow }}
     steps:
-    - run: for ((count=0; count<10; count++)); do sleep 10; done
+    - run: true
