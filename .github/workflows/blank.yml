@@ -1,6 +1,6 @@
 on: push     
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - run: true
