@@ -2,7 +2,7 @@ on: push
 jobs:
   example:
     runs-on: ubuntu-latest
-    container: docker:dind
+    container: null
     steps:
     - run: echo FROM python > Dockerfile
     - run: docker build .
