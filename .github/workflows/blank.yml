@@ -2,7 +2,8 @@ on: push
 jobs:
   example:
     runs-on: ubuntu-latest
-    container: null
+    container: alpine
     steps:
+    - run: apk add docker
     - run: echo FROM python > Dockerfile
     - run: docker build .
