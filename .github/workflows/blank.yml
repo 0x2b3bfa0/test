@@ -2,7 +2,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: docker
+    container: ubuntu
     steps:
     - uses: actions/checkout@v2
-    - run: docker build .
+    - run: apt update && apt install --yes docker && docker build .
