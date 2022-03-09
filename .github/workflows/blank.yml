@@ -1,6 +1,8 @@
 on: push     
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    container: docker:dind
     steps:
-    - run: true
+    - uses: actions/checkout@v2
+    - run: docker build .
