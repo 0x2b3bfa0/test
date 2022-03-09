@@ -2,7 +2,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu
+    container: alpine
     steps:
     - uses: actions/checkout@v2
-    - run: apt update && apt install --yes docker && docker build .
+    - run: apk add docker && docker build .
