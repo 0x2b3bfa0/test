@@ -1,8 +1,8 @@
-on: push     
+on: workflow_dispatch     
 jobs:
-  test:
-    runs-on: self-hosted
-    container: alpine
+  example:
+    runs-on: ubuntu-latest
+    container: docker:dind
     steps:
-    - uses: actions/checkout@v2
-    - run: apk add docker && docker build .
+    - run: echo FROM python > Dockerfile
+    - run: docker build .
