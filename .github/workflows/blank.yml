@@ -2,8 +2,7 @@ on: workflow_dispatch
 jobs:
   example:
     runs-on: ubuntu-latest
-    container: alpine
+    container: null
     steps:
-    - run: apk add docker
     - run: echo FROM python > Dockerfile
     - run: docker build .
