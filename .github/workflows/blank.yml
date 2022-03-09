@@ -1,8 +1,7 @@
-on: push
+on: workflow_dispatch     
 jobs:
   example:
-    runs-on: ubuntu-latest
-    container: null
+    runs-on: self-hosted # containerized runner
     steps:
     - run: echo FROM python > Dockerfile
     - run: docker build .
