@@ -2,7 +2,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: docker:dind
+    container: docker
     steps:
     - uses: actions/checkout@v2
     - run: docker build .
