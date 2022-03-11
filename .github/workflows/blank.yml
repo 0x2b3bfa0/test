@@ -1,7 +1,8 @@
 on: push
 jobs:
-  example:
-    runs-on: self-hosted # containerized runner
+  test:
+    runs-on: ubuntu-latest
     steps:
-    - run: echo FROM python > Dockerfile
-    - run: docker build .
+    - uses: actions/checkout@v2
+    - uses: iterative/setup-cml@v1
+    - run: date > file && cml pr .
