@@ -1,6 +1,10 @@
-on: workflow_dispatch
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: env | grep RUNNER_
+    - uses: actions/checkout@v2
+    - uses: iterative/setup-cml@v1
+    - run: date > file && cml pr .
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
