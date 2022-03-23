@@ -1,7 +1,25 @@
+
 on: push
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - name: deploy runner
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GCP_CML_RUNNER_KEY }}
+        run: |
+          cml runner \
+            --single \
+            --labels=test \
+            --token=${{ secrets.PAT }} \
+            --cloud=gcp \
+            --cloud-region=us-west \
+            --cloud-type=m
   test:
-    runs-on: [self-hosted, test1]
+    needs: [setup]
+    runs-on: [self-hosted, test]
     steps:           
       - uses: actions/checkout@v2
       - uses: mxschmitt/action-tmate@v3
