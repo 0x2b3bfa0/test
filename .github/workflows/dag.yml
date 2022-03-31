@@ -1,0 +1,21 @@
+on: push
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo one
+  two_a:
+    needs: one
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo two_a
+  two_b:
+    needs: one
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo two_b
+  three:
+    needs: [two_a, two_b]
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo three
