@@ -17,5 +17,8 @@ jobs:
   three:
     needs: [two_a, two_b]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [1, 2, 3]
     steps:
-    - run: echo three
+    - run: echo three ${{ matrix.part }}
