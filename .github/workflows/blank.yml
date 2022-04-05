@@ -1,7 +1,12 @@
-
 on: push
 jobs:
-  test:
-    runs-on: self-hosted
-    steps:           
-      - run: sleep 86400
+  fails:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: iterative/setup-dvc@v1
+    - run: dvc doctor && dvc metrics show
+  succeeds:
+    runs-on: ubuntu-latest
+    steps:
+    - run: pip install dvc
+    - run: dvc doctor && dvc metrics show
