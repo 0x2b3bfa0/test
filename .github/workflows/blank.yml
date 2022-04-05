@@ -3,10 +3,10 @@ jobs:
   fails:
     runs-on: macos-latest
     steps:
-    - run: brew install dvc@2.10.0
+    - run: brew install dvc
     - run: dvc doctor && dvc metrics show
   succeeds:
     runs-on: macos-latest
     steps:
-    - run: pip install dvc==2.10.0
+    - run: pip3 install dvc==2.10.0
     - run: dvc doctor && dvc metrics show
