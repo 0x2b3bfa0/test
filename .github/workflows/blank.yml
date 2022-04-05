@@ -3,10 +3,10 @@ jobs:
   fails:
     runs-on: ubuntu-latest
     steps:
-    - uses: iterative/setup-dvc@v1
+    - run: wget https://github.com/iterative/dvc/releases/download/2.10.0/dvc_2.10.0_amd64.deb && sudo apt install ./dvc_2.10.0_amd64.deb
     - run: dvc doctor && dvc metrics show
   succeeds:
     runs-on: ubuntu-latest
     steps:
-    - run: pip install dvc
+    - run: pip install dvc==2.10.0
     - run: dvc doctor && dvc metrics show
