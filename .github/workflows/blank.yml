@@ -1,11 +1,21 @@
 on: push
 jobs:
-  fails:
+  fails-linux:
     runs-on: macos-latest
     steps:
     - run: brew install dvc
     - run: dvc doctor && dvc metrics show
-  succeeds:
+  succeeds-linux:
+    runs-on: macos-latest
+    steps:
+    - run: pip3 install dvc==2.10.0
+    - run: dvc doctor && dvc metrics show
+  fails-macos:
+    runs-on: macos-latest
+    steps:
+    - run: brew install dvc
+    - run: dvc doctor && dvc metrics show
+  succeeds-macos:
     runs-on: macos-latest
     steps:
     - run: pip3 install dvc==2.10.0
