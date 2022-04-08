@@ -1,4 +1,4 @@
-on: workflow_dispatch
+on: push
 jobs:
   fails:
     runs-on: ubuntu-latest
