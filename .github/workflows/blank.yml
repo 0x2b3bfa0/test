@@ -1,22 +1,12 @@
-on: push
+on: workflow_dispatch
 jobs:
-  fails-linux:
+  fails:
     runs-on: ubuntu-latest
     steps:
     - run: wget https://github.com/iterative/dvc/releases/download/2.10.0/dvc_2.10.0_amd64.deb && sudo apt install ./dvc_2.10.0_amd64.deb
     - run: dvc doctor && dvc metrics show
-  succeeds-linux:
+  succeeds:
     runs-on: ubuntu-latest
-    steps:
-    - run: pip3 install dvc==2.10.0
-    - run: dvc doctor && dvc metrics show
-  fails-macos:
-    runs-on: macos-latest
-    steps:
-    - run: wget https://github.com/iterative/dvc/releases/download/2.10.0/dvc-2.10.0.pkg && sudo installer -pkg dvc-2.10.0.pkg -target /
-    - run: dvc doctor && dvc metrics show
-  succeeds-macos:
-    runs-on: macos-latest
     steps:
     - run: pip3 install dvc==2.10.0
     - run: dvc doctor && dvc metrics show
