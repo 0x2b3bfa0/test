@@ -6,7 +6,7 @@ jobs:
         system:
         - ubuntu-latest
         - macos-latest
-    runs-on: matrix.system
+    runs-on: ${{ matrix.system }}
     steps:
     - run: curl https://cml.sh | sh
     - run: cml --version
