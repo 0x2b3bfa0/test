@@ -13,6 +13,8 @@ jobs:
     runs-on: ${{ matrix.system }}
     container: ${{ matrix.container }}
     steps:
+    - if: matrix.container == 'alpine'
+      run: apk add curl
     - run: curl https://cml.sh | sh
     - run: cml --version
     - run: curl https://cml.sh | sh -s v0.12.0
