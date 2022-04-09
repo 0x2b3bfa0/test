@@ -7,18 +7,16 @@ jobs:
         system:
         - ubuntu-latest
         - macos-latest
-        container:
-        - ubuntu
-        - alpine
-        - ""
+        include:
+        - system: ubuntu-latest
+          docker: true
     runs-on: ${{ matrix.system }}
-    container: ${{ matrix.container }}
     steps:
-    - if: matrix.container == 'alpine'
-      run: apt update && apt install --yes curl
-    - if: matrix.container == 'alpine'
-      run: apk add curl
     - run: curl https://cml.sh | sh
     - run: cml --version
     - run: curl https://cml.sh | sh -s v0.12.0
     - run: cml --version | grep 0.12.0
+    - run: |
+        docker run --rm ubuntu "apt update && apt install --yes curl && curl https://cml.sh | sh && cml --version"
+        docker run --rm alpine "apk add curl && curl https://cml.sh | sh && cml --version"
+      if: matrix.docker
