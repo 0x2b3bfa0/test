@@ -6,7 +6,12 @@ jobs:
         system:
         - ubuntu-latest
         - macos-latest
+        container:
+        - ubuntu
+        - alpine
+        - ""
     runs-on: ${{ matrix.system }}
+    container: ${{ matrix.container }}
     steps:
     - run: curl https://cml.sh | sh
     - run: cml --version
