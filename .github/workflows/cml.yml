@@ -15,6 +15,8 @@ jobs:
     container: ${{ matrix.container }}
     steps:
     - if: matrix.container == 'alpine'
+      run: apt update && apt install --yes curl
+    - if: matrix.container == 'alpine'
       run: apk add curl
     - run: curl https://cml.sh | sh
     - run: cml --version
