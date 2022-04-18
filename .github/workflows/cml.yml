@@ -5,6 +5,7 @@ jobs:
     container: ghcr.io/iterative/cml
     steps:
       - uses: actions/checkout@v3
+      - run: git --version
       - run: cml ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -13,6 +14,7 @@ jobs:
     steps:
       - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v3
+      - run: git --version
       - run: cml ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
