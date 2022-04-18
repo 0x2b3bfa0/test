@@ -1,19 +1,11 @@
 on: push
 jobs:
-  bad:
+  fix:
     runs-on: ubuntu-latest
     container: ghcr.io/iterative/cml
     steps:
       - uses: actions/checkout@v3
-      - run: git config --global --add safe.directory "$PWD"
-      - run: cml ci
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-  good:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: iterative/setup-cml@v1
-      - uses: actions/checkout@v3
+      - run: git config --global --add safe.directory .
       - run: cml ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
