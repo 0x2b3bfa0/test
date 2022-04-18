@@ -1,26 +1,18 @@
 on: push
 jobs:
-  test-v2:
+  bad:
     runs-on: ubuntu-latest
-    container: ghcr.io/iterative/cml:latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: cml ci
-  test-v3:
-    runs-on: ubuntu-latest
-    container: ghcr.io/iterative/cml:latest
+    container: ghcr.io/iterative/cml
     steps:
       - uses: actions/checkout@v3
       - run: cml ci
-  test-setup-v2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: iterative/setup-cml@v1
-      - uses: actions/checkout@v2
-      - run: cml ci
-  test-setup-v3:
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+  good:
     runs-on: ubuntu-latest
     steps:
       - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v3
       - run: cml ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
