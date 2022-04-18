@@ -1,6 +1,26 @@
 on: push
 jobs:
-  test:
+  test-v2:
+    runs-on: ubuntu-latest
+    container: ghcr.io/iterative/cml:latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cml ci
+  test-v3:
+    runs-on: ubuntu-latest
+    container: ghcr.io/iterative/cml:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: cml ci
+  test-setup-v2:
     runs-on: ubuntu-latest
     steps:
-    - run: sleep infinity
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v2
+      - run: cml ci
+  test-setup-v3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v3
+      - run: cml ci
