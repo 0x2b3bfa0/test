@@ -3,4 +3,5 @@ jobs:
   reproduce:
     runs-on: macos-latest
     steps:
+      - run: brew install hashicorp/tap/terraform
       - run: terraform --version
