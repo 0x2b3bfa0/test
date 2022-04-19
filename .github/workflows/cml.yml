@@ -1,6 +1,6 @@
 on: push
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  reproduce:
+    runs-on: macos-latest
     steps:
       - run: terraform --version
