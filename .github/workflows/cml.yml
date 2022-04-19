@@ -5,5 +5,6 @@ jobs:
     container: ghcr.io/iterative/cml
     steps:
       - uses: actions/checkout@v3
-      - run: ls -la ..
-      - run: id
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
