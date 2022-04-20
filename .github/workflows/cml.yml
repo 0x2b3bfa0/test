@@ -1,6 +1,6 @@
 on: push
 jobs:
   reproduce:
-    runs-on: ubunrtu-latest
+    runs-on: ubuntu-latest
     steps:
       - run: sleep infinity
