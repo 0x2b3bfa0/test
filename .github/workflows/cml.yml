@@ -3,7 +3,8 @@ jobs:
   example:
     runs-on: windows-latest
     steps:
-    - run: >-
+    - shell: bash
+      run: >-
         node -e
         'require("child_process").execFile("node", ["-e", process.argv[1]], console.log)'
         'require("fs").readSync(0, Buffer.alloc(1))'
