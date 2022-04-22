@@ -1,7 +1,7 @@
 on: push
 jobs:
   example:
-    runs-on: macos-latest
+    runs-on: windows-latest
     steps:
     - run: >-
         node -e
