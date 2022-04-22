@@ -1,6 +1,9 @@
 on: push
 jobs:
-  reproduce:
-    runs-on: ubuntu-latest
+  example:
+    runs-on: macos-latest
     steps:
-      - run: sleep infinity
+    - run: >-
+        node -e
+        'require("child_process").execFile("node", ["-e", process.argv[1]], console.log)'
+        'require("fs").readSync(0, Buffer.alloc(1))'
