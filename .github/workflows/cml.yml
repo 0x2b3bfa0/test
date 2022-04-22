@@ -6,12 +6,12 @@ jobs:
         run: >-
           node -e
           'require("child_process").execFile("node", ["-e", process.argv[1]], console.log)'
-          'require("fs").readSync(0, Buffer.alloc(1))'
+          'process.stdin.isTTY; require("fs").readSync(0, Buffer.alloc(1))'
       - shell: bash
         run: >-
           node -e
           'require("child_process").execFile("node", ["-e", process.argv[1]], console.log)'
-          'process.stdin.isTTY; require("fs").readSync(0, Buffer.alloc(1))'
+          'require("fs").readSync(0, Buffer.alloc(1))'
     runs-on: ${{ matrix.system }}
     strategy:
       matrix:
