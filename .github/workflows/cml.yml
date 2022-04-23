@@ -5,6 +5,6 @@ jobs:
     container: hashicorp/terraform
     steps:
       - run: apk add curl git && curl https://cml.sh | sh
-      - run: cml --version
+      - run: git config --get remote.origin.url
       - run: cml runner --cloud=aws
       
