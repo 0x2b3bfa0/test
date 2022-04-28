@@ -1,10 +1,13 @@
 on: push
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-    container: hashicorp/terraform
     steps:
       - uses: actions/checkout@v3
-      - run: apk add curl && curl https://cml.sh | sh
-      - run: cml runner --cloud=aws
-      
+      - uses: iterative/setup-cml@v1
+      - run: |
+          date | tee $(uuidgen)
+          cml pr $_
+          cml send-comment --pr --update <(date)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
