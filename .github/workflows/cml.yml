@@ -13,4 +13,4 @@ jobs:
           git branch
           cml send-comment --pr --update <(date)
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }} # ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
