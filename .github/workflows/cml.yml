@@ -3,6 +3,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
       - run: cml send-github-check <(date)
         env:
