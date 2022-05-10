@@ -5,3 +5,5 @@ jobs:
     steps:
       - uses: iterative/setup-cml@v1
       - run: cml send-github-check <(date)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
