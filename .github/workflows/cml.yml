@@ -1,10 +1,15 @@
-on: pull_request
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
-      - run: cml send-github-check <(date)
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          ci: --unshallow --user-name
+      - uses: iterative/setup-cml@v1
+        with:
+          ci: --unshallow --user-name=Helio
+      - uses: iterative/setup-cml@v1
+        with:
+          ci: true
