@@ -4,9 +4,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-cml@cml-ci
         with:
           ci: --unshallow --user-name=Helio
-      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-cml@cml-ci
         with:
           ci: true
