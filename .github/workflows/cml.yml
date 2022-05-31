@@ -7,6 +7,10 @@ jobs:
       - uses: iterative/setup-cml@cml-ci
         with:
           ci: --unshallow --user-name=Helio
+        env:
+          REPO_TOKEN: ${{ github.token }}
       - uses: iterative/setup-cml@cml-ci
         with:
           ci: true
+        env:
+          REPO_TOKEN: ${{ github.token }}
