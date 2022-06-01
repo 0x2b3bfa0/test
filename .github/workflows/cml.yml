@@ -1,16 +1,9 @@
-on: push
+on: pull_request
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@cml-ci
-        with:
-          ci: --unshallow --user-name=Helio
+      - uses: iterative/setup-cml@v1
+      - run: echo "# Lorem Ipsum" > report.md && cml send-github-check report.md
         env:
-          REPO_TOKEN: ${{ github.token }}
-      - uses: iterative/setup-cml@cml-ci
-        with:
-          ci: true
-        env:
-          REPO_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
