@@ -3,7 +3,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cehckout@v3
+      - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
       - run: echo "# Lorem Ipsum" > report.md && cml send-github-check report.md
         env:
