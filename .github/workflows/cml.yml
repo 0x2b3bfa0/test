@@ -5,6 +5,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
-      - run: echo "# Lorem Ipsum" > report.md && cml send-github-check report.md
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
