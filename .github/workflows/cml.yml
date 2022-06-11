@@ -1,12 +1,8 @@
-on: pull_request
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v1
-      - uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
+      - run: echo "$JSON"
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          JSON: ${{ toJson(          {event_type:new-cml, client_payload:{tag:github.sha}}          ) }}
