@@ -1,14 +1,13 @@
-on: push
+on:
+  pull_request:
+    types: [closed]
 jobs:
-  test:
+  notify:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v1
-      - run: |
-          cml ci --unshallow
-          date | tee a && echo cml pr a
-          git branch
-          cml send-comment --pr --update <(date)
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+    - if: contains(github.event.pull_request.labels.*.name, 'security')
+      run: 'printenv SLACK_MESSAGE | jq --raw-input {text:.} | curl --header "Content-Type: application/json" --data-binary=@- "$SLACK_WEBHOOK"'
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }
+        SLACK_MESSAGE: ${{ github.actor }} merged ${{ github.event.pull_request.title }} <${{ github.event.pull_request.url }}|(link)>
