@@ -6,7 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-    - if: contains(github.event.pull_request.labels.*.name, 'security')
+    - if: |
+        contains(github.event.pull_request.labels.*.name, 'security') ||
+        contains(github.event.pull_request.labels.*.name, 'bug')
       run: |
         printenv SLACK_MESSAGE |
         jq --raw-input --slurp {text:.} |
