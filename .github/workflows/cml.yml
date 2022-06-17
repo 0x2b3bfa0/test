@@ -1,8 +1,13 @@
-on: push
+on:
+  pull_request:
+    types: [closed]
 jobs:
-  test:
+  notify:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - run: echo "$JSON"
+      - if: contains(github.event.pull_request.labels.*.name, 'security')
+        run: printenv SLACK_MESSAGE | jq --raw-input {text:.} | curl --header "Content-Type: application/json" --data-binary=@- "$SLACK_WEBHOOK"
         env:
-          JSON: ${{ toJson(          {event_type:new-cml, client_payload:{tag:github.sha}}          ) }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: ${{ github.actor }} merged ${{ github.event.pull_request.title }}
