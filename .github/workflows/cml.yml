@@ -6,6 +6,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: iterative/setup-cml@v1
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
       - if: contains(github.event.pull_request.labels.*.name, 'security')
         run: printenv SLACK_MESSAGE | jq --raw-input {text:.} | curl --header "Content-Type: application/json" --data-binary=@- "$SLACK_WEBHOOK"
         env:
