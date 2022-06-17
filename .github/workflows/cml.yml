@@ -3,16 +3,17 @@ on:
     types: [closed]
 jobs:
   notify:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
     - if: contains(github.event.pull_request.labels.*.name, 'security')
       run: |
         printenv SLACK_MESSAGE |
-        jq --raw-input {text:.} |
-        curl --header "Content-Type: application/json" --data-binary @- "$SLACK_WEBHOOK"
+        jq --raw-input --slurp {text:.} |
+        curl --data-binary @- "$SLACK_WEBHOOK"
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: |
           ${{ github.actor }}
-          ${{ github.event.pull_request.title }} <${{ github.event.pull_request.url }}|(link)>
+          ${{ github.event.pull_request.title }}
+          ${{ github.event.pull_request.html_url }}
