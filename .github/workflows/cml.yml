@@ -12,7 +12,7 @@ jobs:
         with:
           limit-access-to-actor: true
       - if: contains(github.event.pull_request.labels.*.name, 'security')
-        run: printenv SLACK_MESSAGE | jq --raw-input {text:.} | curl --header "Content-Type: application/json" --data-binary=@- "$SLACK_WEBHOOK"
+        run: 'printenv SLACK_MESSAGE | jq --raw-input {text:.} | curl --header "Content-Type: application/json" --data-binary=@- "$SLACK_WEBHOOK"'
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: ${{ github.actor }} merged ${{ github.event.pull_request.title }}
+          SLACK_MESSAGE: ${{ github.actor }} merged ${{ github.event.pull_request.title }} ${{ github.event.pull_request.url }}
