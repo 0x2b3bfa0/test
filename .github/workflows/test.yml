@@ -1,0 +1,33 @@
+on: push
+jobs:
+  test:
+    strategy:
+      matrix:
+        mode: [Indexed, NonIndexed]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: helm/kind-action@v1
+    - run: |
+        cat <<END > configration.yml
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          name: job
+        spec:
+          completions: 50
+          parallelism: 11
+          completionMode: ${{ matrix.mode }}
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - command: [bash, -c, 'echo Partition $JOB_COMPLETION_INDEX; ((RANDOM%2)) && sleep infinity || exit $((RANDOM%2))']
+                image: bash
+                name: bash
+        END
+    - run: |
+        kubectl apply --filename configuration.yml
+        brew install stern && stern job
+
+    
