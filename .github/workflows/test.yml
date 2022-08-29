@@ -8,3 +8,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - run: date > file && cml pr --merge --skip-ci file
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
