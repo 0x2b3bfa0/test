@@ -1,12 +1,28 @@
-on:
-  push:
-    branches: [main]
+on: push
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
-      - run: date > file && cml pr --merge --skip-ci file
+      - run: >
+          cml runner
+          --cloud=azure
+          --cloud-type=m
+          --cloud-region=eu-west
+          --labels=cml
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          CML_RUNNER_NAME: cml_runner_name
+  train:
+    needs: deploy
+    runs-on: [self-hosted, cml]
+    timeout-minutes: 50400
+    steps:
+      - uses: actions/checkout@v3
+      - uses: iterative/setup-cml@v1
+      - run: date
