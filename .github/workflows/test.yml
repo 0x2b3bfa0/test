@@ -1,8 +1,10 @@
-on: push
+on:
+  issues:
+    types: [opened]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: touch file
-        working-directory: new
-      - run: find .
+    - run: echo "$ISSUE"
+      env:
+         ISSUE: ${{ github.event.issue }}
