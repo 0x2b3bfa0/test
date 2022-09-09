@@ -5,6 +5,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "$ISSUE"
+    - run: |
+        echo "$ISSUE"
       env:
-         ISSUE: ${{ github.event.issue }}
+        ISSUE: ${{ github.event.issue }}
