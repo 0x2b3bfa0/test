@@ -2,10 +2,9 @@ on:
   issues:
     types: [opened]
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo "$ISSUE"
+    - run: echo "$ISSUE"
       env:
-        ISSUE: ${{ github.event.issue.number }}
+        ISSUE: ${{ github.event.issue }}
