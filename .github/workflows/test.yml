@@ -23,6 +23,7 @@ jobs:
           git checkout -b bump/$(npm version ${{ github.event.inputs.bump }})
           git push --set-upstream origin --follow-tags HEAD
           gh pr create --title "Bump version to $(git describe --tags)" --fill
+          gh pr merge --squash --auto
         env:
           GITHUB_TOKEN: ${{ github.token }}
   release:
