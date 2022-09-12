@@ -1,6 +1,6 @@
 {
   "name": "pseudoexec",
-  "version": "0.0.0+development",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "homepage": "https://github.com/0x2b3bfa0/node-pseudoexec#readme",
