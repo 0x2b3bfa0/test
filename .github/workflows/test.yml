@@ -5,7 +5,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-     - run: gh release edit $TAG --prerelease=false
-       env:
-         GITHUB_TOKEN: ${{ github.token }}
-         TAG: ${{ github.event.release.tag_name }}
+     - uses: actions/checkout@v3
+     - run: gh release edit --prerelease=false ${{ github.event.release.tag_name }}
