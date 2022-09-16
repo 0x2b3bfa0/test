@@ -1,11 +1,16 @@
 name: Release
-on: release
+on:
+  release:
+    types:
+    	- published
+      - unpublished
+      - created
+      - edited
+      - deleted
+      - prereleased
+      - released
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-     - run: date>test
-     - uses: softprops/action-gh-release@v1
-       if: github.event_name == 'release'
-       with:
-         files: test
+     - run: echo ${{ github.event_name }}
