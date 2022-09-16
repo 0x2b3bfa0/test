@@ -3,10 +3,8 @@ permissions:
   contents: read
 jobs:
   test:
+    env:
+      SMOKE_TEST_TARGET: ${{ github.event_name == 'pull_request_target' && 'default' || 'gpu' }}
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/checkout@v3
-     - uses: iterative/setup-cml@v1
-     - run: cml send-comment /etc/passwd
-       env:
-         GITHUB_TOKEN: ${{ github.token }}
+     - run: echo $SMOKE_TEST_TARGET
