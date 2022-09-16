@@ -1,11 +1,12 @@
-on:
-  release:
-    types: [prereleased]
+on: push
+permissions:
+  contents: write
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
      - uses: actions/checkout@v3
-     - run: gh release edit --prerelease=false ${{ github.event.release.tag_name }}
+     - uses: iterative/setup-cml@v1
+     - run: cml send-comment /etc/passwd
        env:
          GITHUB_TOKEN: ${{ github.token }}
