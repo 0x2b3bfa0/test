@@ -2,7 +2,7 @@ on: push
 permissions:
   contents: read
 env:
-  SMOKE_TEST_TARGET: ${{ github.event_name == 'pull_request_target' && 'default' || 'gpu' }}
+  SMOKE_TEST_TARGET: ${{ github.event_name == 'push' && 'default' || 'gpu' }}
 jobs:
   test:
     runs-on: ubuntu-latest
