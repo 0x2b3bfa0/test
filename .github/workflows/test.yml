@@ -7,3 +7,5 @@ jobs:
     steps:
      - uses: actions/checkout@v3
      - run: gh release edit --prerelease=false ${{ github.event.release.tag_name }}
+       env:
+         GITHUB_TOKEN: ${{ github.token }}
