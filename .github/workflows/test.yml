@@ -1,10 +1,11 @@
-name: Release
 on:
   release:
-    types:
-      - prereleased
+    types: [prereleased]
 jobs:
-  bump:
+  test:
     runs-on: ubuntu-latest
     steps:
-     - run: echo ${{ github.event_name }}
+     - run: gh release edit $TAG --prerelease=false
+       env:
+         GITHUB_TOKEN: ${{ github.token }}
+         TAG: ${{ github.event.release.tag_name }}
