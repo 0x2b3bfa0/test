@@ -5,7 +5,6 @@ on:
       test_target:
         description: Type of instances to be provisioned during test.
         required: true
-        default: 'gpu+spot'
         type: choice
         options:
           - quick
