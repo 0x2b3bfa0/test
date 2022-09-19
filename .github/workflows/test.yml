@@ -1,8 +1,21 @@
-on: push
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      test_target:
+        description: Type of instances to be provisioned during test.
+        required: true
+        default: 'gpu+spot'
+        type: choice
+        options:
+          - quick
+          - quick+spot
+          - gpu
+          - gpu+spot
 permissions:
   contents: read
 env:
-  SMOKE_TEST_TARGET: ${{ github.event_name == 'push' && 'default' || 'gpu' }}
+  SMOKE_TEST_TARGET: ${{ github.event_name == 'workflow_dispatch' && 'quick' || inputs.test_target }}
 jobs:
   test:
     runs-on: ubuntu-latest
