@@ -15,7 +15,7 @@ on:
 permissions:
   contents: read
 env:
-  SMOKE_TEST_TARGET: ${{ github.event_name == 'workflow_dispatch' && 'quick' || inputs.test_target }}
+  SMOKE_TEST_TARGET: ${{ github.event_name == 'workflow_dispatch' && 'quick' || inputs.test_target || 'gpu+spot' }}
 jobs:
   test:
     runs-on: ubuntu-latest
