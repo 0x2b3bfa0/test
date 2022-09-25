@@ -15,7 +15,7 @@
     "exec",
     "process"
   ],
-  "author": "0x2b3bfa0@googlemail.com",
+  "author": "0x2b3bfa0@googlemail .com",
   "license": "MIT",
   "devDependencies": {
     "jest": "^27.1.0"
