@@ -1,12 +1,23 @@
-on: push
+on: pull_request_target
+
 jobs:
+  authorize:
+    environment: ${{
+      github.event_name == 'pull_request_target' &&
+      github.event.pull_request.head.repo.full_name != github.repository &&
+      'external' ||
+      'internal' }}
+    runs-on: ubuntu-latest
+    steps:
+    - run: true
+ 
   test:
+    needs: authorize
     runs-on: ubuntu-latest
-    if: false
     steps:
-     - run: echo $SMOKE_TEST_TARGET
-  test1:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-     - run: echo $SMOKE_TEST_TARGET
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha || github.ref }}
+    - run: printenv SECRET
+      env:
+        SECRET: ${{ secrets.SECRET }}
