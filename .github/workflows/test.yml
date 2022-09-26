@@ -3,6 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: sudo apt update && sudo apt install --yes snapcraft && echo "$PASSWORD" | snapcraft login --with -
+    - run: sudo apt update && sudo apt install --yes snapcraft && snapcraft login
       env:
-        PASSWORD: ${{ secrets.PASSWORD }}
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.PASSWORD }}
