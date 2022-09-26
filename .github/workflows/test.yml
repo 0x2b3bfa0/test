@@ -1,8 +1,8 @@
-on: push
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - run: sudo apt update && sudo apt install --yes snapcraft && snapcraft login
-      env:
-        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.PASSWORD }}
+ on: push
+ jobs:
+   test:
+      runs-on: ubuntu-latest
+      steps:
+      - run: sudo apt update && sudo apt install --yes snapcraft && echo "$PASSWORD" | snapcraft login --with -
+        env:
+          PASSWORD: a${{ secrets.PASSWORD }}
