@@ -9,4 +9,7 @@
      timeout-minutes: 60
      runs-on: ubuntu-latest
      steps:
-     - run: false
+     - run: |
+          while true; do echo $((++a))
+            timeout 64 sleep $((2**++exponent)) # exponential backoff, maximum 64 seconds
+          done
