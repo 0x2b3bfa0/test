@@ -4,7 +4,7 @@
       runs-on: ubuntu-latest
       steps:
       - run: |
-          curl --location https://github.com/iterative/cml/releases/download/v$VERSION/cml-linux-x64 --output cml && chmod o+x cml && ./cml --version | tee /dev/stderr | fgrep $VERSION
+          curl --location https://github.com/iterative/cml/releases/download/v$VERSION/cml-linux-x64 --output cml && chmod g+x cml && ./cml --version | tee /dev/stderr | fgrep $VERSION
           docker run --interactive ghcr.io/iterative/cml --version | tee /dev/stderr | fgrep $VERSION
           npx @dvcorg/cml@0.17.3 --version | tee /dev/stderr | fgrep $VERSION
         env:
