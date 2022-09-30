@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/0x2b3bfa0/node-pseudoexec/issues"
   },
-  "keywords": [
+  "keywords": [ 
     "exec",
     "process"
   ],
