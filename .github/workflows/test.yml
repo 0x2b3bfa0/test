@@ -1,15 +1,10 @@
- on: push
+ on:
+   pull_request:
+     types: [closed]
  jobs:
    test:
-      timeout-minutes: 60
       runs-on: ubuntu-latest
       steps:
-      - run: sleep 10
-   test1:
-     timeout-minutes: 60
-     runs-on: ubuntu-latest
-     steps:
-     - run: |
-          while true; do echo $((++a))
-            timeout 64 sleep $((2**++exponent)) # exponential backoff, maximum 64 seconds
-          done
+      - run: echo "$A"
+        env:
+          A: ${{ toJSON(github.event.pull_request) }}
