@@ -7,4 +7,4 @@
       steps:
       - run: echo "$A"
         env:
-          A: ${{ toJSON(github.event.pull_request) }}
+          A: ${{ github.event.pull_request.merge_commit_sha }}
