@@ -8,5 +8,3 @@ jobs:
     uses: ./.github/workflows/test.yml
     with:
       release: false
-  dunno:
-    uses: ./.github/workflows/test.yml
