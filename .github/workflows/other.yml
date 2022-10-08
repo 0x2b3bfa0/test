@@ -4,7 +4,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: conda config --add channels conda-forge && conda install ldid
-    - run: ldid
+    - shell: bash -l {0}
+      run: ldid
   yes:
     uses: ./.github/workflows/test.yml
     with:
