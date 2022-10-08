@@ -3,7 +3,7 @@ jobs:
   ldid:
     runs-on: ubuntu-latest
     steps:
-    - run: conda install ldid
+    - run: pip install conda && conda install ldid
   yes:
     uses: ./.github/workflows/test.yml
     with:
