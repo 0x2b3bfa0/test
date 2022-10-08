@@ -3,8 +3,11 @@ jobs:
   ldid:
     runs-on: ubuntu-latest
     steps:
-    - run: conda config --add channels conda-forge && conda install ldid
-    - run: $CONDA/bin/ldid
+    - run: |
+        echo "$CONDA/bin" >> "$GITHUB_PATH"
+        conda config --add channels conda-forge
+        conda install ldid
+    - run: ldid
   yes:
     uses: ./.github/workflows/test.yml
     with:
