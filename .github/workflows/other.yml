@@ -1,5 +1,10 @@
 on: push
 jobs:
+  ldid:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH # https://github.com/actions/runner-images/issues/6283
+    - run: brew install ldid
   yes:
     uses: ./.github/workflows/test.yml
     with:
