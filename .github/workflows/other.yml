@@ -1,0 +1,12 @@
+on: push
+jobs:
+  yes:
+    uses: ./.github/workflows/test.yml
+    with:
+      release: true
+  no:
+    uses: ./.github/workflows/test.yml
+    with:
+      release: false
+  dunno:
+    uses: ./.github/workflows/test.yml
