@@ -2,6 +2,9 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: [1,2,3,4]
     steps:
     - run: date > age-${{ matrix.file }}
     - uses: actions/upload-artifact@v3
