@@ -1,18 +1,9 @@
-on: push
+on: release
 jobs:
-  ldid:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo "$CONDA/bin" >> "$GITHUB_PATH"
-        conda config --add channels conda-forge
-        conda install ldid=2.1.2
-    - run: ldid
-  yes:
-    uses: ./.github/workflows/test.yml
-    with:
-      release: true
-  no:
-    uses: ./.github/workflows/test.yml
-    with:
-      release: false
+    - run: printenv CONTEXT
+      env:
+        CONTEXT: ${{ toJSON(context) }}
+
