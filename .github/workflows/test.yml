@@ -2,11 +2,13 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        file: [1,2,3,4]
     steps:
-    - run: date > age-${{ matrix.file }}
+    - run: echo 1 > age-a
+    - uses: actions/upload-artifact@v3
+      with:
+        name: age-binaries
+        path: age-*
+    - run: echo 2 > age-a
     - uses: actions/upload-artifact@v3
       with:
         name: age-binaries
