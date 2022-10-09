@@ -3,13 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: echo 1 > age-a
-    - uses: actions/upload-artifact@v3
+    - uses: mxschmitt/action-tmate@v3
       with:
-        name: age-binaries
-        path: age-*
-    - run: echo 2 > age-a
-    - uses: actions/upload-artifact@v3
-      with:
-        name: age-binaries
-        path: age-*
+        limit-access-to-actor: true
