@@ -5,5 +5,5 @@ jobs:
     steps:
     - run: printenv CONTEXT
       env:
-        CONTEXT: ${{ toJSON(context) }}
+        CONTEXT: ${{ toJSON(github) }}
 
