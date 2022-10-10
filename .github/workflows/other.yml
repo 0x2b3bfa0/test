@@ -1,9 +1,21 @@
-on: release
+on: push
 jobs:
-  test:
+  create:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: [1, 2, 3]
+    steps:
+    - run: date > file-${{ matrix.file }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: files
+        path: file-*
+  read:
+    needs: create
     runs-on: ubuntu-latest
     steps:
-    - run: printenv CONTEXT
-      env:
-        CONTEXT: ${{ toJSON(github) }}
-
+    - uses: actions/download-artifact@v2
+      with:
+        name: files
+    - run: find
