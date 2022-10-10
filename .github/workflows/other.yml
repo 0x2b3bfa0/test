@@ -5,5 +5,6 @@ jobs:
   cml-pr:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.event_type }} ${{ github.event.client_playload.sha }}
-      
+      - run: printenv A
+        env:
+          A: ${{ toJSON(github.event) }}
