@@ -3,7 +3,6 @@ on:
     types: [age-interop-request]
 jobs:
   cml-pr:
-    if: github.event.event_type == 'age-interop-request'
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.event.event_type }} ${{ github.event.client_playload.sha }}
