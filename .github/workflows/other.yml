@@ -1,21 +1,10 @@
-on: push
+on:
+  repository_dispatch:
+    types: [age-interop-request]
 jobs:
-  create:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        file: [1, 2, 3]
-    steps:
-    - run: date > file-${{ matrix.file }}
-    - uses: actions/upload-artifact@v2
-      with:
-        name: files
-        path: file-*
-  read:
-    needs: create
+  cml-pr:
+    if: github.event.event_type == 'age-interop-request'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v2
-      with:
-        name: files
-    - run: find
+      - run: echo ${{ github.event.event_type }} ${{ github.event.client_playload.sha }}
+      
