@@ -5,4 +5,4 @@ jobs:
     steps:
       - run: sleep infinity &
       - run: jobs
-      - run: ps
+      - run: ps aux
