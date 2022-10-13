@@ -3,5 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep infinity & disown
-      - run: jobs && ps
+      - run: sleep infinity &
+      - run: jobs
+      - run: ps
