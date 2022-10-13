@@ -1,10 +1,7 @@
-on:
-  repository_dispatch:
-    types: [age-interop-request]
+on: push
 jobs:
-  cml-pr:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv A
-        env:
-          A: ${{ toJSON(github.event) }}
+      - run: sleep infinity & disown
+      - run: jobs && ps
