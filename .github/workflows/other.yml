@@ -3,6 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep infinity &
-      - run: jobs
-      - run: ps aux
+      - run: printenv EVENT
+        env:
+          EVENT: ${{ toJSON(github.event) }}
