@@ -3,6 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv EVENT
+      - run: printenv EVENT 
         env:
           EVENT: ${{ toJSON(github.event) }}
