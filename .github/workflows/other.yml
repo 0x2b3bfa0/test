@@ -2,7 +2,10 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: [one, two, three, four]
     steps:
       - run: printenv EVENT
         env:
-          EVENT: ${{ toJSON({"a":1, "b":2, "c":{"d":3}}) }}
+          EVENT: ${{ matrix.value == 'one' && 'a' || matrix.value == 'two' && 'b' || matrix.value == 'three' && 'c' || 'invalid' }}
