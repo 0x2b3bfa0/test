@@ -5,4 +5,4 @@ jobs:
     steps:
       - run: printenv EVENT
         env:
-          EVENT: ${{ toJSON({a:1, b:2, c:{d:3}}) }}
+          EVENT: ${{ toJSON({"a":1, "b":2, "c":{"d":3}}) }}
