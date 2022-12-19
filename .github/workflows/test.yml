@@ -13,10 +13,10 @@ jobs:
   example:
     needs: authentication
     runs-on: ubuntu-latest
-    container:
-      image: node
-      credentials:
-        username: ${{ needs.authentication.outputs.username }}
-        password: ${{ needs.authentication.outputs.password }}
+    #container:
+    #  image: node
+    #  credentials:
+    #    username: ${{ needs.authentication.outputs.username }}
+    #    password: ${{ needs.authentication.outputs.password }}
     steps:
-      - run: echo done
+      - run: echo ${{ needs.authentication.outputs.username }}
