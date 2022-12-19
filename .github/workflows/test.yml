@@ -1,8 +1,22 @@
 on: push
 jobs:
-  test:
-    runs-on: macos-12-arm64
+  authentication:
+    runs-on: ubuntu-latest
+    outputs:
+      username: ${{ steps.authenticate.outputs.username }}
+      password: ${{ steps.authenticate.outputs.password }}
     steps:
-    - uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
+      - id: authenticate
+        run: |
+          echo "username=sample" >> $GITHUB_OUTPUT
+          echo "password=secret" >> $GITHUB_OUTPUT
+  example:
+    needs: authentication
+    runs-on: ubuntu-latest
+    container:
+      image: node
+      credentials:
+        username: ${{ needs.authentication.outputs.username }}
+        password: ${{ needs.authentication.outputs.password }}
+    steps:
+      - run: echo done
