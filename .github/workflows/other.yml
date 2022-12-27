@@ -1,11 +1,9 @@
 on: push
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       matrix:
         value: [one, two, three, four]
     steps:
-      - run: printenv EVENT
-        env:
-          EVENT: ${{ matrix.value == 'one' && 'a' || matrix.value == 'two' && 'b' || matrix.value == 'three' && 'c' || 'invalid' }}
+      - run: sleep infinity
