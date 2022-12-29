@@ -10,7 +10,7 @@ jobs:
         --idle-timeout=60
         --labels=${{ github.run_id }}-${{ github.run_attempt }}
       env:
-        CML_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   reproduce:
     needs: launch
     runs-on:
