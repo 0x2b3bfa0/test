@@ -1,10 +1,14 @@
-on: push
+on: workflow_dispatch
 jobs:
-  test:
-    runs-on: self-hosted
-    strategy:
-      matrix:
-        test: [1, 2, 3, 4, 5, 6, 7, 8]
-      max-parallel: 4
+  launch:
+    runs-on: ubuntu-latest
     steps:
-      - run: sleep 601
+    - uses: iterative/setup-cml@v1
+    - run: env && cml runner launch --idle-timeout=60 --labels=unique
+      env:
+        CML_DRIVER_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  reproduce:
+    needs: launch
+    runs-on: [self-hosted, unique]
+    steps:
+      - run: sleep 120 # more than --idle-timeout=60 above
