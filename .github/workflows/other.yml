@@ -7,4 +7,4 @@ jobs:
         test: [1, 2, 3, 4, 5, 6, 7, 8]
       max-parallel: 4
     steps:
-      - run: sleep 600
+      - run: sleep 601
