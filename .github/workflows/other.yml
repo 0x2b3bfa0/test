@@ -4,7 +4,6 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        value: [1, 2, 3, 4, 5, 6, 7, 8]
-      max-parallel: 4
+        test: [1, 2, 3, 4]
     steps:
-      - run: sleep 600 # more than 500
+      - run: sleep infinity
