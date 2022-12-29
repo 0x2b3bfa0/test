@@ -1,4 +1,4 @@
-on: push
+on: workflow_dispatch
 jobs:
   authentication:
     runs-on: ubuntu-latest
