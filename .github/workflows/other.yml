@@ -1,14 +1,20 @@
-on: workflow_dispatch
+on: push
 jobs:
   launch:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - uses: iterative/setup-cml@v1
-    - run: env && cml runner launch --idle-timeout=60 --labels=unique
+    - run: >
+        cml runner launch
+        --idle-timeout=60
+        --labels=${{ github.run_id }}-${{ github.run_attempt }}
       env:
         CML_DRIVER_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   reproduce:
     needs: launch
-    runs-on: [self-hosted, unique]
+    runs-on:
+      - self-hosted
+      - ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - run: sleep 120 # more than --idle-timeout=60 above
