@@ -1,22 +1,12 @@
 on: push
 jobs:
-  runner:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - run: >
-        npx github:iterative/cml runner launch
-        --labels=${{ github.run_id }}-${{ github.run_attempt }}
-        --idle-timeout=60
-      env:
-        CML_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-  job:
-    strategy: # run two jobs serially on the same runner
+  test:
+    strategy:
       matrix:
-        test: [1, 2]
-      max-parallel: 1
+        test: [1, 2, 3, 4, 5, 6, 7, 8]
+      max-parallel: 4
     runs-on:
       - self-hosted
-      - ${{ github.run_id }}-${{ github.run_attempt }}
+      - codespaces
     steps:
-      - run: sleep 120 # more than --idle-timeout=60 above
+      - run: sleep 600
