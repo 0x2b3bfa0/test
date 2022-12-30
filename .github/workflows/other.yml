@@ -12,7 +12,6 @@ jobs:
       env:
         REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   reproduce:
-    needs: launch
     runs-on:
       - self-hosted
       - ${{ github.run_id }}-${{ github.run_attempt }}
