@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         test: [1, 2]
-      max-parallel: 1
     runs-on:
       - self-hosted
       - ${{ github.run_id }}-${{ github.run_attempt }}
