@@ -9,9 +9,9 @@ jobs:
         --labels=${{ github.run_id }}-${{ github.run_attempt }}
         --idle-timeout=60
       env:
-        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        CML_DRIVER_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   job:
-    strategy:
+    strategy: # run two jobs serially on the same runner
       matrix:
         test: [1, 2]
       max-parallel: 1
