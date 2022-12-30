@@ -9,4 +9,4 @@ jobs:
       - self-hosted
       - codespaces
     steps:
-      - run: sleep 600
+      - run: sleep 120
