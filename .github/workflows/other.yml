@@ -4,9 +4,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: iterative/setup-cml@v1
     - run: >
-        cml runner launch
+        npx github:iterative/cml runner launch
         --idle-timeout=60
         --labels=${{ github.run_id }}-${{ github.run_attempt }}
       env:
