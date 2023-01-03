@@ -7,6 +7,5 @@ jobs:
       max-parallel: 4
     runs-on:
       - self-hosted
-      - codespaces
     steps:
       - run: sleep 120
