@@ -4,19 +4,7 @@ jobs:
   build-age:
     runs-on: ubuntu-latest
     steps:
-      - name: Create FiloSottile/age status
-        if: always() && github.event.action == 'age-interop-request'
       - name: Use specified FiloSottile/age commit
         if: github.event.action == 'age-interop-request'
-        run: echo "AGE_REF=${{ github.event.client_payload.sha }}" >> $GITHUB_ENV
-      - name: Use FiloSottile/age current main
-        if: github.event.action != 'age-interop-request'
-        run: echo "AGE_REF=refs/heads/main" >> $GITHUB_ENV
-
-      - name: Check out FiloSottile/age
-        uses: actions/checkout@v3
-        with:
-          repository: FiloSottile/age
-          ref: ${{ env.AGE_REF }}
-          path: go-age/age
+        run: echo "AGE_REF=${{ github.event.client_payload.sha }}" 
       
