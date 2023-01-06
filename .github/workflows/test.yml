@@ -1,22 +1,22 @@
-on: workflow_dispatch
+name: Interoperability tests
+on: repository_dispatch
 jobs:
-  authentication:
+  build-age:
     runs-on: ubuntu-latest
-    outputs:
-      username: ${{ steps.authenticate.outputs.username }}
-      password: ${{ steps.authenticate.outputs.password }}
     steps:
-      - id: authenticate
-        run: |
-          echo "username=sample" >> $GITHUB_OUTPUT
-          echo "password=secret" >> $GITHUB_OUTPUT
-  example:
-    needs: authentication
-    runs-on: ubuntu-latest
-    #container:
-    #  image: node
-    #  credentials:
-    #    username: ${{ needs.authentication.outputs.username }}
-    #    password: ${{ needs.authentication.outputs.password }}
-    steps:
-      - run: echo ${{ needs.authentication.outputs.username }}
+      - name: Create FiloSottile/age status
+        if: always() && github.event.action == 'age-interop-request'
+      - name: Use specified FiloSottile/age commit
+        if: github.event.action == 'age-interop-request'
+        run: echo "AGE_REF=${{ github.event.client_payload.sha }}" >> $GITHUB_ENV
+      - name: Use FiloSottile/age current main
+        if: github.event.action != 'age-interop-request'
+        run: echo "AGE_REF=refs/heads/main" >> $GITHUB_ENV
+
+      - name: Check out FiloSottile/age
+        uses: actions/checkout@v3
+        with:
+          repository: FiloSottile/age
+          ref: ${{ env.AGE_REF }}
+          path: go-age/age
+      
