@@ -26,9 +26,9 @@ jobs:
     steps:
       - run: |
           while sleep 10; do
-            run=$(gh run list --{json=,jq=.[0].}databaseId || continue)
-            job=$(gh run view $run --json=jobs --jq='.jobs[]|select(.name=="dummy")|.databaseId' || continue)
-            gh api /repos/$GITHUB_REPOSITORY/actions/jobs/$job || continue
+            run=$(gh run list --{json=,jq=.[0].}databaseId ||:)
+            job=$(gh run view $run --json=jobs --jq='.jobs[]|select(.name=="dummy")|.databaseId' ||:)
+            gh api /repos/$GITHUB_REPOSITORY/actions/jobs/$job ||:
             date
           done
         env:
