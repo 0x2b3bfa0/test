@@ -9,6 +9,7 @@ jobs:
       - run: >
           ./config.sh
           --unattended
+          --name=$(uuidgen)
           --url "https://github.com/$GITHUB_REPOSITORY"
           --token "$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
         env:
