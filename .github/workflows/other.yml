@@ -9,7 +9,7 @@ jobs:
       - run: >
           ./config.sh
           --unattended
-          --url "$GITHUB_REPOSITORY"
+          --url "https://github.com/$GITHUB_REPOSITORY"
           --token "$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
