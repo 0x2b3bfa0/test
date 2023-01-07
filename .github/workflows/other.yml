@@ -1,11 +1,36 @@
 on: push
 jobs:
-  test:
+  runner:
+    runs-on: ubuntu-latest
+    steps:
+      - run: >
+          curl --location https://github.com/actions/runner/releases/download/v2.299.1/actions-runner-linux-x64-2.299.1.tar.gz |
+          tar --gzip --extract
+      - run: >
+          ./config.sh
+          --unattended
+          --url "$GITHUB_REPOSITORY"
+          --token "$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      - run: ./run.sh
+  dummy:
+    runs-on: self-hosted
     strategy:
       matrix:
-        test: [1, 2, 3, 4, 5, 6, 7, 8]
-      max-parallel: 4
-    runs-on:
-      - self-hosted
+        test: [1, 2]
     steps:
       - run: sleep 120
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          while sleep 10; do
+            run=$(gh run list --{json=,jq=.[0].}databaseId || continue)
+            job=$(gh run view $run --json=jobs --jq='.jobs[]|select(.name=="dummy")|.databaseId' || continue)
+            gh api /repos/$GITHUB_REPOSITORY/actions/jobs/$job || continue
+            date
+          done
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
