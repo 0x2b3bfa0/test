@@ -36,4 +36,4 @@ jobs:
           done
         env:
           GH_REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} # ${{ github.token }}
