@@ -14,7 +14,9 @@ jobs:
           --token "$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-      - run: ./run.sh
+      - run: >
+          ./run.sh
+        timeout-minutes: 10
   dummy:
     runs-on: self-hosted
     strategy:
