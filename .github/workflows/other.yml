@@ -9,9 +9,9 @@ jobs:
       - run: >
           ./config.sh
           --unattended
-          --name=$(uuidgen)
-          --url "https://github.com/$GITHUB_REPOSITORY"
-          --token "$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
+          --name="$(uuidgen)"
+          --url="https://github.com/$GITHUB_REPOSITORY"
+          --token="$(gh api --jq=.token --method=POST /repos/$GITHUB_REPOSITORY/actions/runners/registration-token)"
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
       - run: ./run.sh
@@ -28,7 +28,7 @@ jobs:
       - run: |
           while sleep 10; do
             run=$(gh run list --{json=,jq=.[0].}databaseId ||:)
-            job=$(gh run view $run --json=jobs --jq='.jobs[]|select(.name=="dummy")|.databaseId' ||:)
+            job=$(gh run view $run --json=jobs --jq='.jobs[] | select(.name=="dummy") | .databaseId' ||:)
             gh api /repos/$GITHUB_REPOSITORY/actions/jobs/$job ||:
             date
           done
