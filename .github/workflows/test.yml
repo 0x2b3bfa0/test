@@ -24,3 +24,9 @@ jobs:
           activate-environment: ldm
           miniconda-version: latest
           use-only-tar-bz2: true
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yaml
+          activate-environment: ldm
+          miniconda-version: latest
+          use-only-tar-bz2: true
