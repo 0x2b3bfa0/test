@@ -1,0 +1,26 @@
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: rinongal/textual_inversion 
+          submodules: true
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: pip
+          cache-dependency-path: environment.yaml
+      - uses: actions/cache@v2
+        with:
+          key: conda
+          path: |
+            ${{ env.CONDA }}/envs
+            ~/conda_pkgs_dir
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yaml
+          activate-environment: ldm
+          miniconda-version: latest
+          use-only-tar-bz2: true
