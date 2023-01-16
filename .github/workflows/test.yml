@@ -4,29 +4,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          repository: rinongal/textual_inversion 
-          submodules: true
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-          cache: pip
-          cache-dependency-path: environment.yaml
-      - uses: actions/cache@v2
-        with:
-          key: conda
-          path: |
-            ${{ env.CONDA }}/envs
-            ~/conda_pkgs_dir
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          environment-file: environment.yaml
-          activate-environment: ldm
-          miniconda-version: latest
-          use-only-tar-bz2: true
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          environment-file: environment.yaml
-          activate-environment: ldm
-          miniconda-version: latest
-          use-only-tar-bz2: true
+      - uses: iterative/setup-cml@v1
+      - run: |
+          cml runner
+          --cloud=aws \
+          --cloud-region-eu-west-1 \
+          --cloud-type=g4dn.2xlarge \
+          --cloud-hdd-size=250 \
+          --cloud-spot=false \
+          --cloud-aws-subnet=subnet-eaf6c38c14583c32d \
+          --cloud-aws-security-group-cal-runner-sg\
+          --labels=cml-test-gpu \
+          --cloud-metadata="Runner=CML" \
+          --cloud-metadata="Application Testing" \
+          --cloud-metadata="Team=ML" \
+          --cloud-metadata="Environment Development" \
+          --idle-timeout=1000\
+          --single
