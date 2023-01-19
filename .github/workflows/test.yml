@@ -1,25 +1,11 @@
 on: push
 jobs:
-  test:
+  example_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v1
-      - run: >
-          cml runner
-          --cloud=aws
-          --cloud-region=eu-west-1
-          --cloud-type=g4dn.2xlarge
-          --cloud-hdd-size=250
-          --cloud-spot=false
-          --cloud-aws-subnet=subnet-eaf6c38c14583c32d
-          --cloud-aws-security-group=cml-runner-sg
-          --labels=cml-test-gpu
-          --cloud-metadata="Runner=CML"
-          --cloud-metadata="Application=Testing"
-          --cloud-metadata="Team=ML"
-          --cloud-metadata="Environment=Development"
-          --idle-timeout=1000
-          --single
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    - name: Deploy to production
+      uses: actions/deploy@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        environment: production
