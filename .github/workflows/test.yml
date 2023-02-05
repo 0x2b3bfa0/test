@@ -13,4 +13,4 @@ jobs:
     steps:
     - run: printenv MATRIX
       env:
-        MATRIX: ${{ toJSON(needs.one.matrix) }}
+        MATRIX: ${{ toJSON(needs.one.strategy) }}
