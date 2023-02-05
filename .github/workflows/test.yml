@@ -1,7 +1,16 @@
 on: push
 jobs:
-  example_job:
+  one:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: [1, 2, 3]
+    steps:
+    - run: echo ${{ matrix.test }}
+  two:
+    needs: one
     runs-on: ubuntu-latest
     steps:
-    - run: circleci tests glob "/etc/*"
-    - run: circleci tests glob "/etc/*" | circleci tests split --split-by=timings
+    - run: printenv MATRIX
+      env:
+        MATRIX: ${{ toJSON(needs.one.matrix) }}
