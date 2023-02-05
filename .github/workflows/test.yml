@@ -5,6 +5,8 @@ jobs:
     strategy:
       matrix:
         test: [1, 2, 3]
+    outputs:
+      strategy: ${{ toJSON(strategy) }}
     steps:
     - run: echo ${{ matrix.test }}
   two:
@@ -13,4 +15,4 @@ jobs:
     steps:
     - run: printenv MATRIX
       env:
-        MATRIX: ${{ toJSON(needs.one) }}
+        MATRIX: ${{ toJSON(needs.one.outputs.strategy) }}
