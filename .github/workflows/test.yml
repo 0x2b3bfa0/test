@@ -3,9 +3,5 @@ jobs:
   example_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to production
-      uses: actions/deploy@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        environment: production
+    - run: circleci tests glob "/etc/*"
+    - run: circleci tests glob "/etc/*" | circleci tests split --split-by=timings
