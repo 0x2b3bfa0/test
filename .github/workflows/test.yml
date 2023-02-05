@@ -2,17 +2,12 @@ on: push
 jobs:
   one:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        test: [1, 2, 3]
-    outputs:
-      strategy: ${{ toJSON(strategy) }}
     steps:
-    - run: echo ${{ matrix.test }}
+      - run: go install github.com/jwilder/dockerize@v0.6.1
+      - run: dockerize
   two:
-    needs: one
     runs-on: ubuntu-latest
     steps:
-    - run: printenv MATRIX
-      env:
-        MATRIX: ${{ toJSON(needs.one.outputs.strategy) }}
+      - uses: actions/setup-go@v3
+      - run: go install github.com/jwilder/dockerize@v0.6.1
+      - run: dockerize
