@@ -1,8 +1,8 @@
 on: push
+env:
+  B: ${{ env.A }}
 jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      - run: echo $(go env GOPATH)/bin >> $GITHUB_PATH
-      - run: go install github.com/jwilder/dockerize@v0.6.1
-      - run: dockerize
+      - run: printenv A && printenv B
