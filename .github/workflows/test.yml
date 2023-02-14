@@ -4,6 +4,4 @@ jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv A && printenv B
-        env:
-          B: ${{ env.A }}
+      - run: exit 
