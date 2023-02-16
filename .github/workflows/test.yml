@@ -1,7 +1,14 @@
 on: push
-
 jobs:
   one:
+    strategy:
+      matrix:
+        test: [1, 2, 3]
     runs-on: ubuntu-latest
     steps:
-      - run: exit 
+      - uses: actions/github-script@v6
+        id: node
+        with:
+          script: return `${1 + ${{ strategy.job-index }}}:${{ strategy.job-total }}`
+          result-encoding: string
+      - run: echo ${{ steps.node.outputs.result }}
