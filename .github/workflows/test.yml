@@ -5,6 +5,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv CLIENT_PAYLOAD
+      - run: printenv A && printenv B
         env:
-          CLIENT_PAYLOAD: toJSON(github.event.client_payload)
+          A: ${{ 'dev' == 'dev' && 'dev-' || '' }}
+          B: ${{ 'foo' == 'dev' && 'dev-' || '' }}
