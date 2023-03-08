@@ -1,11 +1,8 @@
-on:
-  repository_dispatch:
-    types: [test]
+on: push
+concurrency:
+  group: ${{ true && 'develop' }}
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv A && printenv B
-        env:
-          A: ${{ 'dev' == 'dev' && 'dev-' || '' }}
-          B: ${{ 'foo' == 'dev' && 'dev-' || '' }}
+      - run: sleep 30
