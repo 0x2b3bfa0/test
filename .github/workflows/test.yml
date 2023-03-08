@@ -1,6 +1,6 @@
 on: push
 concurrency:
-  group: ${{ true && 'develop' }}
+  group: ${{ false && 'develop' }}
 jobs:
   test:
     runs-on: ubuntu-latest
