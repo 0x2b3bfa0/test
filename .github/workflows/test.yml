@@ -1,6 +1,6 @@
 on: push
 concurrency:
-  group: ${{ 1 == 3 && 'develop' }}
+  group: ${{ (1 == 3 && 'develop') || format('{0}-{1}', github.run_id, github.run_attempt) }}
 jobs:
   test:
     runs-on: ubuntu-latest
