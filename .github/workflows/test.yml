@@ -6,7 +6,7 @@ jobs:
       - uses: actions/github-script@v6
         id: script
         with:
-          script: return JSON.stringify(context.payload);
+          script: return JSON.stringify(context);
           result-encoding: string
       - name: Get result
         run: printenv RESULT
