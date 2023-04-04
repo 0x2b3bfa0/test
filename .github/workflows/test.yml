@@ -1,8 +1,14 @@
-on: push
-concurrency:
-  group: ${{ (1 == 4 && 'develop') || format('{0}-{1}', github.run_id, github.run_attempt) }}
+on: release
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep 30
+      - uses: actions/github-script@v6
+        id: script
+        with:
+          script: return JSON.stringify(context.payload);
+          result-encoding: string
+      - name: Get result
+        run: printenv RESULT
+        env:
+          RESULT: ${{ steps.script.outputs.result }}
