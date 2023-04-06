@@ -1,14 +1,7 @@
-on: release
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
-        id: script
-        with:
-          script: return JSON.stringify(context);
-          result-encoding: string
-      - name: Get result
-        run: printenv RESULT
-        env:
-          RESULT: ${{ steps.script.outputs.result }}
+      - uses: iterative/setup-dvc@v1
+      - run: dvc doctor
