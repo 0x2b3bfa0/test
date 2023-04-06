@@ -1,7 +1,7 @@
 on: push
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: iterative/setup-dvc@v1
-      - run: dvc doctor
+      - run: Invoke-WebRequest https://dvc.org/download/win/dvc-2.52.0 -OutFile dvc.exe
+      - run: ./dvc.exe
