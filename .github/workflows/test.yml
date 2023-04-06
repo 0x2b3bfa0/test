@@ -3,8 +3,8 @@ jobs:
   test:
     runs-on: windows-latest
     steps:
-      #- run: Invoke-WebRequest https://dvc.org/download/win/dvc-2.52.0 -OutFile dvc-2.52.0.exe
-      #- run: ./dvc-2.52.0.exe /SP- /ALLUSERS /VERYSILENT /NORESTART /SUPRESSMSGBOXES
+      - run: Invoke-WebRequest https://dvc.org/download/win/dvc-2.52.0 -OutFile dvc-2.52.0.exe
+      - run: ./dvc-2.52.0.exe /SP- /ALLUSERS /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /DIR="C:\Iterative"
       - uses: mxschmitt/action-tmate@v3
         with:
           limit-access-to-actor: true
