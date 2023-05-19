@@ -5,6 +5,7 @@ jobs:
     steps:
       - run: sleep infinity
   continuation:
+    needs: test
     if: success() || failure()
     runs-on: ubuntu-latest
     steps:
