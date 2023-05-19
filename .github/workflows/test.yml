@@ -2,7 +2,10 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      VARIABLE: value
     steps:
-      - run: echo ${{ env.VARIABLE }}
+      - run: sleep infinity
+  continuation:
+    if: success() || failure()
+    runs-on: ubuntu-latest
+    steps:
+      - run: true
