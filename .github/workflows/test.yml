@@ -3,10 +3,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep infinity
-  continuation:
-    needs: test
-    if: success() || failure()
-    runs-on: ubuntu-latest
-    steps:
-      - run: true
+      - uses: actions/setup-node@v3
