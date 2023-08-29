@@ -3,7 +3,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
+      - uses: docker/metadata-action@v4
+        id: meta
         with:
-          node-version: 16
-      - run: node --version
+          images: test
+          tags: |
+            type=sha,prefix=,format=long,enable=${{ github.ref_name == 'develop' }}
+            type=sha,prefix=ephemeral-,format=long
+            type=semver,pattern={{version}}
+
+      - run: printenv A
+        env:
+          A: ${{ steps.meta.outputs.tags }}
