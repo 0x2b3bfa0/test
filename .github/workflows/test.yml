@@ -3,5 +3,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-
-      - run: printenv GITHUB_ACTIONS
+      - run: printenv test
+        env:
+          test: |
+            ${{ format('{0}\n{1}', 'a', 'b') }}
+            ${{ format("{0}\n{1}", 'a', 'b') }}
