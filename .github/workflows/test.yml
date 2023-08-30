@@ -7,4 +7,5 @@ jobs:
         env:
           test: |
             ${{ format('{0}\n{1}', 'a', 'b') }}
-            ${{ format('{0}\n{1}', 'a', 'b') }}
+            ${{ format('{0}
+            {1}', 'a', 'b') }}
