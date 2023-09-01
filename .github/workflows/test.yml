@@ -1,11 +1,16 @@
 on: push
 jobs:
-  test:
+  right:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv test
+      - run: touch {one,two}.{j,t}x{x,}
+      - run: printenv HASH
         env:
-          test: |
-            ${{ format('{0}\n{1}', 'a', 'b') }}
-            ${{ format('{0}
-            {1}', 'a', 'b') }}
+          HASH: ${{ hashFiles('**/*.js', '**/*.ts', '**/*.jsx', '**/*.tsx') }}
+  wrong:
+    runs-on: ubuntu-latest
+    steps:
+      - run: touch {one,two}.{j,t}x{x,}
+      - run: printenv HASH
+        env:
+          HASH: ${{ hashFiles('**/*.[jt]sx?') }}
