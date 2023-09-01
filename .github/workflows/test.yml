@@ -1,9 +1,8 @@
 on: push
 jobs:
-  right:
+  test:
     runs-on: ubuntu-latest
     steps:
       - run: touch file.ts file.tsx
-      - run: printenv HASH
-        env:
-          HASH: ${{ hashFiles('**/*.tsx?') }}
+      - run: echo ${{ hashFiles('*.tsx?') }} # empty output
+      - run: echo ${{ hashFiles('*.ts', '*.tsx') }} # correct hash
