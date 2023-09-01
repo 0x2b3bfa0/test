@@ -3,14 +3,7 @@ jobs:
   right:
     runs-on: ubuntu-latest
     steps:
-      - run: touch file.ts file.tsx file.js file.jsx
+      - run: touch file.ts file.tsx
       - run: printenv HASH
         env:
-          HASH: ${{ hashFiles('**/*.js', '**/*.ts', '**/*.jsx', '**/*.tsx') }}
-  wrong:
-    runs-on: ubuntu-latest
-    steps:
-      - run: touch file.ts file.tsx file.js file.jsx
-      - run: printenv HASH
-        env:
-          HASH: ${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          HASH: ${{ hashFiles('**/*.tsx?') }}
