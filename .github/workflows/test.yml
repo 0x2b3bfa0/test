@@ -3,14 +3,14 @@ jobs:
   right:
     runs-on: ubuntu-latest
     steps:
-      - run: touch {one,two}.{j,t}x{x,} && find
+      - run: touch file.ts file.tsx file.js file.jsx
       - run: printenv HASH
         env:
           HASH: ${{ hashFiles('**/*.js', '**/*.ts', '**/*.jsx', '**/*.tsx') }}
   wrong:
     runs-on: ubuntu-latest
     steps:
-      - run: touch {one,two}.{j,t}x{x,} && find
+      - run: touch file.ts file.tsx file.js file.jsx
       - run: printenv HASH
         env:
           HASH: ${{ hashFiles('**/*.[jt]sx?') }}
