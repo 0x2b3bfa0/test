@@ -13,4 +13,4 @@ jobs:
       - run: touch file.ts file.tsx file.js file.jsx
       - run: printenv HASH
         env:
-          HASH: ${{ hashFiles('**/*.[jt]sx?') }}
+          HASH: ${{ hashFiles('**/*.tsx?', '**/*.jsx?') }}
