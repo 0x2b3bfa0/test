@@ -3,6 +3,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: touch file.ts file.tsx
-      - run: echo ${{ hashFiles('*.tsx?') }} # empty output
-      - run: echo ${{ hashFiles('*.ts', '*.tsx') }} # correct hash
+      - run: cat /proc/cpuinfo
+      
