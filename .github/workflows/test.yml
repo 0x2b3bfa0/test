@@ -8,7 +8,15 @@ jobs:
     steps:
       - uses: actions/cache/restore@v3
         with:
-          path: '*'
+          path: .
           key: cache
       - run: touch file
-      
+  collect:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - run: touch file
+      - uses: actions/cache/save@v3
+        with:
+          path: '*'
+          key: cache
