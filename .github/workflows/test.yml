@@ -9,7 +9,7 @@ jobs:
       - uses: actions/cache/restore@v3
         with:
           path: file
-          key: cache-2
+          key: cache-*
       - run: cat file
         continue-on-error: true
       - run: date > file-${{ matrix.part }}
@@ -29,4 +29,4 @@ jobs:
       - uses: actions/cache/save@v3
         with:
           path: file
-          key: cache-2
+          key: cache-${{ hashFiles('file') }}
