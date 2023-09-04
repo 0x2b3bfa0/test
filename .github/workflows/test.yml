@@ -9,8 +9,8 @@ jobs:
       - uses: actions/cache/restore@v3
         with:
           path: file
-          key: false
           restore-keys: cache-${{ hashFiles('.github/workflows/test.yml') }}-
+          key: false # why on earth is this mandatory for actions/cache/restore?
       - run: cat file
         continue-on-error: true
       - run: date > file-${{ matrix.part }}
@@ -30,4 +30,4 @@ jobs:
       - uses: actions/cache/save@v3
         with:
           path: file
-          key: cache-${{ hashFiles('.github/workflows/test.yml') }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ strategy.job-index }}
+          key: cache-${{ hashFiles('.github/workflows/test.yml') }}-${{ hashFiles('file') }}
