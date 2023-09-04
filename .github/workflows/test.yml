@@ -10,7 +10,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: file*
-          restore-keys: cache-${{ hashFiles('.github/workflows/test.yml') }}-*
+          restore-keys: cache-${{ hashFiles('.github/workflows/test.yml') }}-
           key: cache-${{ hashFiles('.github/workflows/test.yml') }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ strategy.job-index }}
       - run: cat file
         continue-on-error: true
