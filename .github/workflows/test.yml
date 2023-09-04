@@ -9,8 +9,9 @@ jobs:
       - uses: actions/cache/restore@v3
         with:
           path: file
-          key: cache-1
-      - run: cat file || true
+          key: cache-2
+      - run: cat file
+        continue-on-error: true
       - run: date > file-${{ matrix.part }}
       - uses: actions/upload-artifact@v3
         with:
@@ -28,4 +29,4 @@ jobs:
       - uses: actions/cache/save@v3
         with:
           path: file
-          key: cache-1
+          key: cache-2
