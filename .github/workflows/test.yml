@@ -10,7 +10,7 @@ jobs:
         with:
           path: file
           key: cache-1
-      - run: cat file
+      - run: cat file || true
       - run: date > file-${{ matrix.part }}
       - uses: actions/upload-artifact@v3
         with:
