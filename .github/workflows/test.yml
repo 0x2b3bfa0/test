@@ -6,7 +6,7 @@ jobs:
       matrix:
         test: [1, 2, 3, 4]
     steps:
-      - uses: actions/cache@v3
+      - uses: actions/cache/restore@v3
         with:
           path: '*'
           key: cache
