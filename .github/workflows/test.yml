@@ -6,11 +6,13 @@ jobs:
       matrix:
         part: [1, 2]
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/cache@v3
         with:
           path: file*
-          restore-keys: cache-*
-          key: cache-${{ hashFiles('/proc/sys/kernel/random/uuid') }}
+          restore-keys: cache-${{ hashFiles('.github/workflows/test.yml') }}-*
+          key: cache-${{ hashFiles('.github/workflows/test.yml') }}-${{ hashFiles('/proc/sys/kernel/random/uuid') }}
       - run: cat file
         continue-on-error: true
       - run: date > file-${{ matrix.part }}
+      - run: cat file-* > file
