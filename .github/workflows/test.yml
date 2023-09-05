@@ -2,13 +2,10 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: something
+    strategy:
+      matrix:
+        field: [a,b,c]
+        other: [d,e,f]
     steps:
-      - uses: docker/metadata-action@v4
-        with:
-          images: |
-            a
-            b
-          tags: |
-            type=semver,pattern=v{{version}}
-            type=sha,format=long,enable=${{ github.ref_name == 'develop' }}
-            type=sha,prefix=ephemeral-,format=long
+      - run: echo a
