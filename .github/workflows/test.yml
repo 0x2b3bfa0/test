@@ -2,10 +2,6 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: something
-    strategy:
-      matrix:
-        field: [a,b,c]
-        other: [d,e,f]
     steps:
-      - run: echo a
+      - uses: iterative/setup-dvc@v1
+      - run: dvc doctor
