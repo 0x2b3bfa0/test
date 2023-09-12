@@ -8,5 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ github.token }}
+      - run: |
+          git config --global user.email "studio@iterative.ai"
+          git config --global user.name "Studio CI"
+          date > file && git add file && git commit -m $(date) && git push
