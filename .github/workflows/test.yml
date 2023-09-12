@@ -12,6 +12,8 @@ jobs:
          - {a: 2, stable: true}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - if: matrix.stable
         id: stable
         run: >
