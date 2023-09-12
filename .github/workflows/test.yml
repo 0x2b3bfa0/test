@@ -1,10 +1,9 @@
 on: push
-permissions:
-  contents: write
 jobs:
   test:
     permissions:
       id-token: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
