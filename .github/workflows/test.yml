@@ -5,14 +5,6 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          audience=$(curl https://$GITHUB_SERVER_URL/_/oidc/audience | jq .audience)
-          echo $audience
-          oidc_token=$(curl $ACTIONS_ID_TOKEN_REQUEST_URL --data audience="$audience" -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq .value)
-          echo $oidc_token
-          password=$(POST https://$GITHUB_SERVER_URL/_/oidc/github/mint-token --data token="$oidc_token" | jq .token)
-          echo $password
-          printenv ACTIONS_ID_TOKEN_REQUEST_TOKEN | base64 | base64 | base64
-          printenv ACTIONS_ID_TOKEN_REQUEST_URL | base64 | base64 | base64
-          #curl --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq --raw-output .value > "$AWS_WEB_IDENTITY_TOKEN_FILE"
-    
+    - uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
