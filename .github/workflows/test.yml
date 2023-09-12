@@ -11,4 +11,4 @@ jobs:
       - run: |
           git config --global user.email "studio@iterative.ai"
           git config --global user.name "Studio CI"
-          date > file && git add file && git commit -m $(date) && git push
+          date > file && git add file && git commit -m "$(date)" && git push
