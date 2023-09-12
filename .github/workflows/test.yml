@@ -16,8 +16,7 @@ jobs:
         id: stable
         run: >
           git for-each-ref --sort=-creatordate --format "%(creatordate:unix) %(refname:short)" refs/tags |
-          awk "{if (\$1 > strftime(\"%s\") - $DAYS_BEFORE_STABLE * 24 * 60 * 60) print \$2}" | tail -1 |
-          paste --delimiters= <(echo tag=) - >> "$GITHUB_OUTPUT"
+          awk "{if (\$1 > strftime(\"%s\") - $DAYS_BEFORE_STABLE * 24 * 60 * 60) print \$2}" | tail -1 
         env:
           DAYS_BEFORE_STABLE: 15
       - run: echo ${{ steps.stable.outputs.tag || github.ref_name }}
