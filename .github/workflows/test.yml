@@ -5,7 +5,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        token: ${{ gothub.token }}
+        token: ${{ github.token }}
     - uses: mxschmitt/action-tmate@v3
       with:
         limit-access-to-actor: true
