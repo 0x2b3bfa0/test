@@ -3,9 +3,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: iterative/setup-cml@v2
       with:
-        token: ${{ github.token }}
-    - uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
+        version: 0.20.0 # lock to version we know works with our code
