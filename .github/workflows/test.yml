@@ -6,6 +6,6 @@ jobs:
     - run: printenv script | python3
       env:
         script: |
-          impoort requests
+          import requests
           print(requests.get("https://fantastic-journey-r4gjwr4jgrpfp9qr-80.app.github.dev/api").text)
           print(requests.get("https://fantastic-journey-r4gjwr4jgrpfp9qr-80.app.github.dev/api/.well-known/openid-configuration").text)
