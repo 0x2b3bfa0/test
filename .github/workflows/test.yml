@@ -13,4 +13,4 @@ jobs:
     if: success() || failure()
     runs-on: ubuntu-latest
     steps:
-    - run: echo ${{ needs.one.result }}
+    - run: echo ${{ needs.o*.result }}
