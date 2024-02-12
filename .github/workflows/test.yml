@@ -10,7 +10,7 @@ jobs:
     - run: false
   three:
     needs: [one, two]
-    if: success() || (failure() && jobs.one.status == 'success')
+    if: success() || (failure() && needs.one.status == 'success')
     runs-on: ubuntu-latest
     steps:
     - run: echo ${{ needs.*.result }}
