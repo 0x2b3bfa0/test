@@ -13,5 +13,7 @@ jobs:
   run:
     needs: launch
     runs-on: self-hosted
+    container:
+      image: docker://iterativeai/cml:0-dvc3-base1
     steps:
       - uses: actions/checkout@v4
