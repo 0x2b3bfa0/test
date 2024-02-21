@@ -16,4 +16,6 @@ jobs:
     container:
       image: docker://iterativeai/cml:0-dvc3-base1
     steps:
-      - uses: actions/checkout@v4
+    - uses: mxschmitt/action-tmate@v3
+      with:
+        detached: true
