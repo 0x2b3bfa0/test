@@ -1,16 +1,17 @@
 on: push
 jobs:
-  one:
+  launch:
     runs-on: ubuntu-latest
     steps:
-    - run: true
-  two:
-    runs-on: ubuntu-latest
+      - uses: actions/checkout@v4
+      - uses: iterative/setup-cml@v1
+      - env:
+          CML_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+        run: |
+          cml runner launch --cloud=gcp --cloud-type=c3d-highcpu-30
+  run:
+    needs: launch
+    runs-on: self-hosted
     steps:
-    - run: false
-  three:
-    needs: [one, two]
-    if: success() || (failure() && needs.one.result == 'success')
-    runs-on: ubuntu-latest
-    steps:
-    - run: echo ${{ needs.*.result }}
+      - uses: actions/checkout@v4
