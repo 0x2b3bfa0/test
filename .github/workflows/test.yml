@@ -13,7 +13,7 @@ jobs:
           cml runner launch --cloud=gcp --cloud-type=c3d-highcpu-30 --cloud-region us-central1-a
   run:
     needs: launch
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     container:
       image: docker://iterativeai/cml:0-dvc3-base1
     steps:
