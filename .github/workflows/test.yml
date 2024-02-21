@@ -9,12 +9,10 @@ jobs:
           CML_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
         run: |
-          cml runner launch --cloud=gcp --cloud-type=c3d-highcpu-30 --cloud-region us-central1-a
+          cml runner launch --cloud=gcp --cloud-type=c3d-highcpu-30 --cloud-region us-central1-a --labels test
   run:
-    runs-on: self-hosted
+    runs-on: [self-hosted, test]
     container:
       image: docker://iterativeai/cml:0-dvc3-base1
     steps:
     - uses: mxschmitt/action-tmate@v3
-      with:
-        detached: true
