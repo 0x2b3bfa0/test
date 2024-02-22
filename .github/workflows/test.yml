@@ -10,6 +10,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
         run: |
           cml runner launch --cloud=gcp --cloud-type=c3d-highcpu-30 --cloud-region us-central1-a --labels test  --cloud-startup-script=ZWNobyAneyJtdHUiOiAxNDYwfScgfCBzdWRvIHRlZSAvZXRjL2RvY2tlci9kYWVtb24uanNvbiAmJiBzdWRvIHN5c3RlbWN0bCByZXN0YXJ0IGRvY2tlcg==
+  a:
     runs-on: [self-hosted, test]
     container:
       image: docker://iterativeai/cml:0-dvc3-base1
