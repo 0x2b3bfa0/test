@@ -1,8 +1,7 @@
-on: pull_request
+on: push
 jobs:
   launch:
     runs-on: ubuntu-latest
     steps:
-    - run: printenv EVENT
-      env:
-        EVENT: ${{ toJSON(github.event) }}
+    - run: sleep 10 &
+    - run: wait
