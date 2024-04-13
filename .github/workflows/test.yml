@@ -3,5 +3,6 @@ jobs:
   launch:
     runs-on: ubuntu-latest
     steps:
-    - run: sleep 30 &
-    - run: wait
+    - run: sleep 30 & echo "process=$!" >> "$GITHUB_OUTPUT"
+      id: pull
+    - run: wait ${{ steps.pull.outputs.process }}
