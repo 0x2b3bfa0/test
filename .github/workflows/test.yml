@@ -11,7 +11,6 @@ jobs:
     - run: |
         while sleep 1; do
           for process in ${{ steps.pull.outputs.processes }}; do
-            test -e /proc/pid/$process && continue 2
-          done
-          break
+            test -e /proc/$process && continue 2
+          done; break
         done
