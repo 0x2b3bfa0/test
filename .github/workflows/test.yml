@@ -1,7 +1,6 @@
 on: pull_request
 jobs:
-  example:
+  test:
     runs-on: ubuntu-latest
     steps:
     - run: echo ${{ github.head_ref }}
-    - run: echo $(basename ${{ github.head_ref }})
