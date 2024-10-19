@@ -1,13 +1,13 @@
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      nuke:
+        description: Delete cloud resources
+        type: boolean
+        default: false
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - id: count
-        run: |
-          echo -e "a=0\nb=1\nc=2\n" |
-          tee "$GITHUB_OUTPUT"
-      - name: Notify delible cloud resources
-        if: steps.count.outputs.b > 0
-        run: true
+      - run: echo -- ${{ inputs.nuke && '--no-dry-run' || '' }}
