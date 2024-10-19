@@ -1,16 +1,13 @@
 on: push
+
 jobs:
-  launch:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        sleep 10 &
-        sleep 20 &
-        echo "processes=$(jobs -p | xargs)" >> "$GITHUB_OUTPUT"
-      id: pull
-    - run: |
-        while sleep 1; do
-          for process in ${{ steps.pull.outputs.processes }}; do
-            test -e /proc/$process && continue 2
-          done; break
-        done
+      - id: count
+        run: |
+          echo -e "a=0\nb=1\nc=2\n" |
+          tee "$GITHUB_OUTPUT"
+      - name: Notify delible cloud resources
+        if: steps.count.outputs.a > 0
+        run: true
