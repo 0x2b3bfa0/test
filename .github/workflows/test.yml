@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       nuke:
-        description: Delete cloud resources
+        description: Delete cloud resources ⚠️
         type: boolean
         default: false
 
