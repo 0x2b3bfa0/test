@@ -1,13 +1,10 @@
-on:
-  workflow_dispatch:
-    inputs:
-      nuke:
-        description: Delete cloud resources 💥
-        type: boolean
-        default: false
+on: push
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo -- ${{ inputs.nuke && '--no-dry-run' || '' }}
+      - uses: actions/checkout@v4
+      - run: cat .env >> "$GITHUB_ENV"
+      - run: env
+
