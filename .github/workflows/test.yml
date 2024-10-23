@@ -5,6 +5,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: iterative/setup-cml@v3
-      - run: date > .file && cml pr create '*'
+      - run: date > .file && cml pr create '.*'
         env:
           CML_TOKEN: ${{ github.token }}
