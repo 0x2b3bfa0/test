@@ -1,12 +1,9 @@
-on:
-  pull_request:
-    branches: ['**']
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: iterative/setup-cml@v3
-      - run: date > .file && cml pr create '.*'
-        env:
-          CML_TOKEN: ${{ github.token }}
+      - uses: iterative/setup-dvc@v1
+        with:
+          version: latest
+      - run: dvc doctor
