@@ -2,8 +2,12 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        secret:
+          - ${{ secrets.A }}
+          - ${{ secrets.SECRET }}
     steps:
-      - uses: iterative/setup-dvc@v1
-        with:
-          version: latest
-      - run: dvc doctor
+      - run: printenv TEST
+        env:
+          TEST: ${{ matrix.secret }}
