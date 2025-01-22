@@ -10,4 +10,4 @@ jobs:
     steps:
       - run: printenv TEST
         env:
-          TEST: ${{ vars.TEST['a'] }}
+          TEST: ${{ fromJson(vars.TEST)['a'] }}
