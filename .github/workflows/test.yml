@@ -5,9 +5,9 @@ jobs:
     strategy:
       matrix:
         secret:
-          - ${{ secrets.A }}
-          - ${{ secrets.SECRET }}
+          - a
+          - b
     steps:
       - run: printenv TEST
         env:
-          TEST: ${{ matrix.secret }}
+          TEST: ${{ vars.TEST[matrix.secret] }}
