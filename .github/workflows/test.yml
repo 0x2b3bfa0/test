@@ -8,4 +8,7 @@ jobs:
           - a
           - b
     steps:
+      - uses: actions/setup-python@v5
+        with:
+          cache: pip
       - run: python -m build
