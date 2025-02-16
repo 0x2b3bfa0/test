@@ -8,6 +8,4 @@ jobs:
           - a
           - b
     steps:
-      - run: printenv TEST
-        env:
-          TEST: ${{ fromJSON(vars.TEST)['a'] }}
+      - run: python -m build
