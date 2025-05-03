@@ -4,4 +4,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cat .git/config
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
