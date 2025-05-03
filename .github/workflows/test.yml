@@ -2,13 +2,6 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        secret:
-          - a
-          - b
     steps:
-      - uses: actions/setup-python@v5
-        with:
-          cache: pip
-      - run: python -m build
+      - uses: actions/chechout@v4
+      - run: cat .git/config
