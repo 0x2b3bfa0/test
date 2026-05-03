@@ -1,0 +1,16 @@
+name: setup
+description: Shared setup for primary and sweep workflows (PoC — stands in for cloud auth, python install, etc.)
+inputs:
+  resource-name:
+    description: Logical resource identifier the caller will operate on
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: "Simulated cloud auth"
+      shell: bash
+      run: echo "authenticated (stub) for ${{ inputs.resource-name }}"
+    - name: "Simulated dependency install"
+      shell: bash
+      run: echo "pip install .[test] (stub)"
