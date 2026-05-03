@@ -1,9 +1,62 @@
-on: push
+name: test
+on:
+  push:
+  workflow_run:
+    workflows: [test]
+    types: [completed]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id || github.ref_name }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_run' }}
 jobs:
-  test:
+  primary:
+    if: github.event_name != 'workflow_run'
     runs-on: ubuntu-latest
+    env:
+      RESOURCE_NAME: resource-${{ github.run_id }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
+      - name: Create resource (simulated)
+        run: |
+          echo "creating $RESOURCE_NAME"
+          sleep 10
+          echo "created $RESOURCE_NAME"
+  sweep:
+    if: github.event_name == 'workflow_run'
+    runs-on: ubuntu-latest
+    env:
+      RESOURCE_NAME: resource-${{ github.event.workflow_run.id }}
+    steps:
+      - name: Inspect trigger
+        run: |
+          echo "triggered by workflow_run id=${{ github.event.workflow_run.id }}"
+          echo "parent conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "would sweep: $RESOURCE_NAME"
+      - name: Wait (dummy, stands in for real grace period)
+        run: sleep 10
+      - name: Delete with retry (flaky: fails twice, succeeds on third)
+        run: |
+          set -u
+          delete() {
+            local n
+            n=$(cat .attempts 2>/dev/null || echo 0)
+            n=$((n + 1))
+            echo "$n" > .attempts
+            echo "  delete attempt $n for $RESOURCE_NAME"
+            if [ "$n" -lt 3 ]; then
+              echo "  -> simulated transient failure"
+              return 1
+            fi
+            echo "  -> deleted"
+            return 0
+          }
+          for i in 1 2 3 4 5; do
+            echo "=== retry round $i ==="
+            if delete; then
+              echo "sweep succeeded after $i round(s)"
+              exit 0
+            fi
+            backoff=$((2 ** i))
+            echo "backing off ${backoff}s"
+            sleep "$backoff"
+          done
+          echo "sweep gave up"
+          exit 1
