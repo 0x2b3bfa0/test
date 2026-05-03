@@ -30,9 +30,9 @@ jobs:
           echo "triggered by workflow_run id=${{ github.event.workflow_run.id }}"
           echo "parent conclusion: ${{ github.event.workflow_run.conclusion }}"
           echo "would sweep: $RESOURCE_NAME"
-      - name: Wait (dummy, stands in for real grace period)
+      - name: "Wait (dummy, stands in for real grace period)"
         run: sleep 10
-      - name: Delete with retry (flaky: fails twice, succeeds on third)
+      - name: "Delete with retry (flaky: fails twice, succeeds on third)"
         run: |
           set -u
           delete() {
