@@ -7,7 +7,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
     - name: "Simulated cloud auth"
       shell: bash
       run: echo "authenticated (stub) for ${{ inputs.resource-name }}"

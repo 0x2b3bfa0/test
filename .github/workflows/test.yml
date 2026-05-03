@@ -10,6 +10,7 @@ jobs:
     env:
       RESOURCE_NAME: resource-${{ github.run_id }}
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
         with:
           resource-name: ${{ env.RESOURCE_NAME }}
